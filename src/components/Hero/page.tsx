@@ -8,7 +8,7 @@ export default function Hero() {
         <section className="flex w-full  border-r pr-20 min-h-screen  flex-col gap-3">
             <div className="flex flex-col gap-1 mt-10 w-full rounded-lg bg-slate-100 px-4 py-9">
                 <h1 className="text-3xl font-semibold">Welcome to Aloy! 👋</h1>
-                <p className="text-sm">The place to launch and discover new tech products. <span className="text-blue-600">Take a tour.</span></p>
+                <p className="text-sm">The place to launch and discover new tech products. <span className="text-blue-600 cursor-pointer">Take a tour.</span></p>
             </div>
           <div className="flex mt-10  border-b pb-2.5 w-full items-center gap-6">
             <svg width="19" height="19" className="">
@@ -114,14 +114,14 @@ export default function Hero() {
             </ul>
 
             <h2 className="uppercase text-primary mt-5 text-[13px] font-semibold">coming soon</h2>
-            <ul className="flex mt-4 border-b pb-10 flex-col gap-5">
+            <ul className="flex mt-3 border-b pb-10 flex-col gap-5">
                 <ComingCard title="Aloy commerce" subtitle="Aloy commerce is an e-commerce platform that integrates augmented reality (AR) for immersive product viewing experience. Customers can explore products in 3D using AR, allowing them to visualize how items will look in their own space before making a purchase." />
                 <ComingCard title="Aloy ai" subtitle="The ChatBot Service is a solution designed to be seamlessly integrated into any web application. It provides a chatbot interface that responds to user queries based using Artificial Intelligence." />
                 {/* <ComingCard title="AloyF" subtitle="The best way to sell online" /> */}
             </ul>
 
             <h2 className="uppercase text-primary mt-5 text-[13px] font-semibold">latest stories</h2>
-            <ul className="flex mt-4 border-b pb-10 flex-col gap-5">
+            <ul className="flex mt-3 border-b pb-10 flex-col gap-5">
             <LatestCard title="Google announce an open-source light weight version of its flagship AI" />
             </ul>
         </section>
@@ -133,14 +133,14 @@ export default function Hero() {
 const ComingCard = ({title, subtitle}: {title: String, subtitle: String}) => (
     <div className="flex flex-col gap-1">
         <h2 className="text-sm font-semibold">{title}</h2>
-        <p className="text-xs leading-6">{subtitle}</p>
+        <p className="text-[12px] leading-6">{subtitle}</p>
     </div>  
 )
 
 const LatestCard = ({title}: {title:string}) => (
     <div className="flex flex-col">
         <h2 className="text-sm font-semibold">{title}</h2>
-        <p className="text-gray-600 text-xs">3 min read</p>
+        <p className="text-gray-600 mt-2 text-xs">3 min read</p>
     </div>
 )
 
@@ -185,7 +185,7 @@ const BlogCard = ({
       />
       <div className="flex flex-col">
         <h2 className="text-xl mt-2 font-bold">{title}</h2>
-        <p className="text-gray-600 text-sm md:text-[14px]">{subtitle}</p>
+        <p className="text-primary font-normal leading-6 mt-1  text-sm md:text-[14px]">{subtitle}</p>
       </div>
     </div>
     <div className="flex items-center mt-2 gap-4">
