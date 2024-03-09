@@ -34,17 +34,17 @@ const ProductNavbar = ({text = 'stories'}: {text:string}) => {
               <ul onClick={() => {
                   setShowList(false)
                 }} className="flex flex-col gap-1">
-              <Link href="/stories" className="flex hover:bg-slate-100 cursor-pointer py-2 px-2 rounded-md items-center gap-2 text-black font-normal text-sm">
+              <Link href="/profile" className="flex hover:bg-slate-100 cursor-pointer py-2 px-2 rounded-md items-center gap-2 text-black font-normal text-sm">
               <svg data-testid="GiftIcon" color="inherit" width="14" height="14" viewBox="0 0 24 24"><path d="M3 7C3 6.44772 3.44772 6 4 6H20C20.5523 6 21 6.44772 21 7V8C21 8.55228 20.5523 9 20 9H4C3.44772 9 3 8.55228 3 8V7Z"></path><path d="M4 12C4 11.4477 4.44772 11 5 11H10C10.5523 11 11 11.4477 11 12V19C11 19.5523 10.5523 20 10 20H5C4.44772 20 4 19.5523 4 19V12Z"></path><path d="M14 11C13.4477 11 13 11.4477 13 12V19C13 19.5523 13.4477 20 14 20H19C19.5523 20 20 19.5523 20 19V12C20 11.4477 19.5523 11 19 11H14Z"></path><path d="M14.4453 2.16806C14.9048 1.8617 15.5257 1.98588 15.832 2.44541C16.1384 2.90493 16.0142 3.5258 15.5547 3.83216L12 6.20196L8.4453 3.83216C7.98577 3.5258 7.8616 2.90493 8.16795 2.44541C8.4743 1.98588 9.09517 1.8617 9.5547 2.16806L12 3.79826L14.4453 2.16806Z"></path></svg>
-                  Stories
+                  Profile
                 </Link>
                 <Link href="/opportunities" className="flex hover:bg-slate-100 cursor-pointer py-2 px-2 rounded-md items-center gap-2 text-black font-normal text-sm">
                 <svg data-testid="HistoryIcon" color="inherit" width="14" height="14" viewBox="0 0 24 24"><path id="Icon" d="M3.51562 3.51562L1.92188 1.92188C1.21406 1.21406 0 1.71563 0 2.71406V7.875C0 8.49844 0.501562 9 1.125 9H6.28594C7.28906 9 7.79063 7.78594 7.08281 7.07812L5.63906 5.63437C7.26562 4.00781 9.51562 3 12 3C16.9688 3 21 7.03125 21 12C21 16.9688 16.9688 21 12 21C10.0875 21 8.31563 20.4047 6.85781 19.3875C6.17813 18.9141 5.24531 19.0781 4.76719 19.7578C4.28906 20.4375 4.45781 21.3703 5.1375 21.8484C7.0875 23.2031 9.45469 24 12 24C18.6281 24 24 18.6281 24 12C24 5.37188 18.6281 0 12 0C8.68594 0 5.68594 1.34531 3.51562 3.51562ZM12 6C11.3766 6 10.875 6.50156 10.875 7.125V12C10.875 12.3 10.9922 12.5859 11.2031 12.7969L14.5781 16.1719C15.0188 16.6125 15.7312 16.6125 16.1672 16.1719C16.6031 15.7312 16.6078 15.0188 16.1672 14.5828L13.1203 11.5359V7.125C13.1203 6.50156 12.6187 6 11.9953 6H12Z"></path></svg>
-                  Opportunities
+                  Bookmarks
                 </Link>
                 <Link href="/database" className="flex hover:bg-slate-100 cursor-pointer px-2 py-2 rounded-md items-center gap-2 text-black font-normal text-sm">
                 <svg data-testid="TradeIcon" color="inherit" width="14" height="14" viewBox="0 0 24 24"><path d="M7 6C7 6.55228 7.44772 7 8 7H18C18.5523 7 19 6.55228 19 6C19 5.44772 18.5523 5 18 5H8C7.44772 5 7 5.44772 7 6Z" fillRule="evenodd" clipRule="evenodd"></path><path d="M17 18C17 18.5523 16.5523 19 16 19H6C5.44772 19 5 18.5523 5 18C5 17.4477 5.44772 17 6 17H16C16.5523 17 17 17.4477 17 18Z" fillRule="evenodd" clipRule="evenodd"></path><path d="M9.70711 9.70711C10.0976 9.31658 10.0976 8.68342 9.70711 8.29289L7.41421 6L9.70711 3.70711C10.0976 3.31658 10.0976 2.68342 9.70711 2.29289C9.31658 1.90237 8.68342 1.90237 8.29289 2.29289L5.29289 5.29289C4.90237 5.68342 4.90237 6.31658 5.29289 6.70711L8.29289 9.70711C8.68342 10.0976 9.31658 10.0976 9.70711 9.70711Z" fillRule="evenodd" clipRule="evenodd"></path><path d="M14.2929 21.7071C13.9024 21.3166 13.9024 20.6834 14.2929 20.2929L16.5858 18L14.2929 15.7071C13.9024 15.3166 13.9024 14.6834 14.2929 14.2929C14.6834 13.9024 15.3166 13.9024 15.7071 14.2929L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071L15.7071 21.7071C15.3166 22.0976 14.6834 22.0976 14.2929 21.7071Z" fillRule="evenodd" clipRule="evenodd"></path></svg>
-                  Database
+                  History
                 </Link>
                 <p className="border-b my-2"></p>
                 <Link href="/settings" className="flex hover:bg-slate-100 cursor-pointer py-2 px-2 rounded-md items-center gap-2 text-black font-normal text-sm">
