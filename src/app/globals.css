@@ -26,4 +26,9 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  
+}
+
+.essential {
+  padding-left: clamp(24px, 24px + 100vw - 1080px, 40px);
 }

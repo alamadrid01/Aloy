@@ -1,11 +1,24 @@
 "use client";
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation';
 import React from 'react'
 
 const ProductNavbar = ({text = 'stories'}: {text:string}) => {
   const [showList, setShowList] = React.useState(false);
   const [showNotification, setShowNotification] = React.useState(false);
+  const [isProfile, setIsProfile] = React.useState(true);
+
+  const pathname = usePathname();
+
+  React.useEffect (() => {
+    if(pathname === "/profile"){
+      setIsProfile(true)
+    }else{
+      setIsProfile(false);
+    }
+    
+  }, [pathname])
 
   return (
     <div  className={`md:px-10 px-7 py-3 border-b w-full bg-white z-10 flex justify-between items-center`}>
@@ -25,7 +38,12 @@ const ProductNavbar = ({text = 'stories'}: {text:string}) => {
        </ul>
 
        <div className="flex items-center gap-5 md:gap-8">
-       <svg width="24" height="24" onClick={() => setShowNotification(!showNotification)}  className='cursor-pointer' viewBox="0 0 24 24" fill="none"><path d="M17.5 1.25a.5.5 0 0 1 1 0v2.5H21a.5.5 0 0 1 0 1h-2.5v2.5a.5.5 0 0 1-1 0v-2.5H15a.5.5 0 0 1 0-1h2.5v-2.5zm-11 4.5a1 1 0 0 1 1-1H11a.5.5 0 0 0 0-1H7.5a2 2 0 0 0-2 2v14a.5.5 0 0 0 .8.4l5.7-4.4 5.7 4.4a.5.5 0 0 0 .8-.4v-8.5a.5.5 0 0 0-1 0v7.48l-5.2-4a.5.5 0 0 0-.6 0l-5.2 4V5.75z" fill="#000"></path></svg>
+        {
+          isProfile ? <div className="flex gap-2 cursor-pointer hover:underline text-sm items-center">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-label="Write"><path d="M14 4a.5.5 0 0 0 0-1v1zm7 6a.5.5 0 0 0-1 0h1zm-7-7H4v1h10V3zM3 4v16h1V4H3zm1 17h16v-1H4v1zm17-1V10h-1v10h1zm-1 1a1 1 0 0 0 1-1h-1v1zM3 20a1 1 0 0 0 1 1v-1H3zM4 3a1 1 0 0 0-1 1h1V3z" fill="currentColor"></path><path d="M17.5 4.5l-8.46 8.46a.25.25 0 0 0-.06.1l-.82 2.47c-.07.2.12.38.31.31l2.47-.82a.25.25 0 0 0 .1-.06L19.5 6.5m-2-2l2.32-2.32c.1-.1.26-.1.36 0l1.64 1.64c.1.1.1.26 0 .36L19.5 6.5m-2-2l2 2" stroke="currentColor"></path></svg>
+            Write
+          </div> :        <svg width="24" height="24" onClick={() => setShowNotification(!showNotification)}  className='cursor-pointer' viewBox="0 0 24 24" fill="none"><path d="M17.5 1.25a.5.5 0 0 1 1 0v2.5H21a.5.5 0 0 1 0 1h-2.5v2.5a.5.5 0 0 1-1 0v-2.5H15a.5.5 0 0 1 0-1h2.5v-2.5zm-11 4.5a1 1 0 0 1 1-1H11a.5.5 0 0 0 0-1H7.5a2 2 0 0 0-2 2v14a.5.5 0 0 0 .8.4l5.7-4.4 5.7 4.4a.5.5 0 0 0 .8-.4v-8.5a.5.5 0 0 0-1 0v7.48l-5.2-4a.5.5 0 0 0-.6 0l-5.2 4V5.75z" fill="#000"></path></svg>
+        }
         <Image src='/images/human.png' onClick={() => setShowList(!showList)} className='rounded-full cursor-pointer' width={22} height={22} alt='my image' />
 
         {
