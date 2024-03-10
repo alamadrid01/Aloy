@@ -1,5 +1,6 @@
 "use client"
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
 
@@ -16,7 +17,7 @@ const Profile = () => {
           </ul>
 
           <div className="min-h-[15rem] font-medium rounded-md flex mt-12 text-lg items-center flex-col justify-center bg-gray-100">
-            {"You haven't added any content yet."} <span className='block font-normal text-stone-600 hover:underline cursor-pointer mt-1 text-base'> Start writing ✍️</span>
+            {"You haven't added any content yet."} <Link href="/new-story" className='block font-normal text-stone-600 hover:underline cursor-pointer mt-1 text-base'> Start writing ✍️</Link>
           </div>
 
           <h2 className="text-sm text-primary uppercase font-medium mt-16">About</h2>

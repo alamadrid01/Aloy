@@ -32,3 +32,13 @@ body {
 .essential {
   padding-left: clamp(24px, 24px + 100vw - 1080px, 40px);
 }
+
+p{
+  font-size: 20px;
+  line-height: 2;
+  font-family: serif;
+}
+
+blockquote{
+  font-size: 17px;
+}

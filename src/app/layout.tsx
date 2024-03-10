@@ -1,14 +1,6 @@
 import type { Metadata } from "next";
-import { Inter, Roboto, Raleway, Poppins, DM_Sans, Libre_Franklin, Wix_Madefor_Text, Manrope } from "next/font/google";
 import "./globals.css";
 import ProductNavbar from "@/components/ProductNavbar/page";
-
-const inter = Inter({ subsets: ["latin"] });
-const poppins = Poppins({ subsets: ["latin"], weight: ['400', '700', '500', '600'] });
-const dm_sans = DM_Sans({ subsets: ["latin"], weight: ['400', '700', '500', '600'] });
-const libre_franklin = Libre_Franklin({ subsets: ["latin"], weight: ['400', '700', '500', '600'] });
-const wix_madefor_text = Wix_Madefor_Text({ subsets: ["latin-ext"], weight: ['400', '700', '500', '600'] });
-const manrope = Manrope({ subsets: ["latin"], weight: ['400', '700', '500', '600'] });
 
 export const metadata: Metadata = {
   title: "Aloy",
