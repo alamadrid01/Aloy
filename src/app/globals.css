@@ -33,11 +33,6 @@ body {
   padding-left: clamp(24px, 24px + 100vw - 1080px, 40px);
 }
 
-p{
-  font-size: 20px;
-  line-height: 2;
-}
-
 blockquote{
   font-size: 17px;
 }
@@ -51,6 +46,8 @@ blockquote{
 }
 .ql-editor p{
   font-family: serif;
+  font-size: 20px;
+  line-height: 2;
 }
 
 [data-placeholder]::before {
