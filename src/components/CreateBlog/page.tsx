@@ -42,7 +42,7 @@ const CreateBlog = () => {
 
 
   return (
-    <div className="">
+    <div className="w-full flex flex-col">
          <form className="flex flex-col gap-3 mt-9">
                <label className="-mb-2 font-medium" htmlFor="image">
             Upload an image:
@@ -89,7 +89,7 @@ const CreateBlog = () => {
             ""
           )}
         </div>
-        <div className="flex mb-20 mt-4 flex-col gap-3">
+        <div className="flex mb-16 mt-4 flex-col gap-3">
           <input
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -112,16 +112,22 @@ const CreateBlog = () => {
       
       {typeof window === 'object' && (
         <ReactQuill
-          placeholder='Tell your story...'
+          placeholder={`Tell your story...\nExample- Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`}
           theme="snow" 
           value={value} 
           onChange={setValue} 
           modules={modules}
           formats={formats}
           ref={quillRef}
-          className="!font-mono"
         />
       )}
+        {
+          value !== "" && title !== "" && description !== "" && image !== null ? (
+            <button className="py-3 border border-slate-300 text-black px-7 rounded-lg hover:bg-slate-200  mt-6 self-end">Create</button>
+            ) : (
+            null
+          )
+        }
     </div>
   )
 }

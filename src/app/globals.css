@@ -36,9 +36,39 @@ body {
 p{
   font-size: 20px;
   line-height: 2;
-  font-family: serif;
 }
 
 blockquote{
   font-size: 17px;
+}
+
+.ql-disabled{
+  font-family: serif;
+  border: none !important;
+}
+.ql-editor, .ql-container{
+  border: none !important;
+}
+.ql-editor p{
+  font-family: serif;
+}
+
+[data-placeholder]::before {
+  font-size: 18px;
+  line-height: 2;
+  font-family: serif;
+  /* Add any other styles you want for the placeholder text */
+}
+
+/* Adjust the style for the placeholder when the input is focused (optional) */
+
+
+
+.ql-snow{
+  border: none !important;
+  /* border-bottom: 0.1px solid #c5b3b3 !important; */
+}
+.ql-toolbar{
+  border: none !important;
+  border-bottom: 0.1px solid #c5b3b3 !important;
 }
