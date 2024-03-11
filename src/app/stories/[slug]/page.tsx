@@ -1,5 +1,5 @@
 "use client"
-import CommentModals from '@/components/CommentModals/page'
+import CommentModals from '@/components/Modals/CommentModals/page'
 import MoreStories from '@/components/MoreStories/page'
 import ShowContent from '@/components/ShowContent/page'
 import Image from 'next/image'

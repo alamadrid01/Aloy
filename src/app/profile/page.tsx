@@ -1,10 +1,12 @@
 "use client"
+import ProfileModal from '@/components/Modals/ProfileModal/page'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
 
 const Profile = () => {
+  const [show, setShow] = React.useState(false);
 
   return (
     <div className='flex gap-20 container max-w-7xl min-h-screen'>
@@ -36,8 +38,10 @@ const Profile = () => {
               <div className="flex cursor-pointer hover:underline gap-1"> 0 <span>following</span></div>
           </div>
 
-          <h3 className="text-sm mt-6 cursor-pointer hover:underline text-green-600">Edit profile</h3>
+          <h3 onClick={()=> setShow(!show)} className="text-sm mt-6 cursor-pointer hover:underline text-green-600">Edit profile</h3>
            </section>
+
+           <ProfileModal show={show} />
     </div>
   )
 }
