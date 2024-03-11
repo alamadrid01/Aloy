@@ -159,9 +159,9 @@ const CreateBlog = ({
           ref={quillRef}
         />
       )}
-      {value !== "" && title !== "" && description !== "" && image !== null ? (
+      {value !== "" && title !== "" && description !== "" ? (
         <button className="py-3 border border-slate-300 text-black px-7 rounded-lg hover:bg-slate-200  mt-6 self-end">
-          Create
+          {titles !== "" && descriptions !== "" && contents !== "" ? "Update" : "Create"}
         </button>
       ) : null}
     </div>

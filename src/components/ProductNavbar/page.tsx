@@ -32,9 +32,9 @@ const ProductNavbar = ({text = 'stories'}: {text:string}) => {
        </div>
 
        <ul className="">
-        <Link href="#"> <li className="inline-block text-slate-800 font-normal text-sm px-3 py-2 rounded-md hover:bg-slate-100 cursor-pointer">Products</li></Link>
-        <Link href="#"><li className="inline-block text-slate-800 font-normal text-sm px-3 py-2 rounded-md hover:bg-slate-100 cursor-pointer">Community</li></Link>
-        <Link href="#"><li className="inline-block text-slate-800 font-normal text-sm px-3 py-2 rounded-md hover:bg-slate-100 cursor-pointer">Advertise</li></Link>
+        <Link href="/"> <li className="inline-block text-slate-800 font-normal text-sm px-3 py-2 rounded-md hover:bg-slate-100 cursor-pointer">Products</li></Link>
+        <Link href="/community"><li className="inline-block text-slate-800 font-normal text-sm px-3 py-2 rounded-md hover:bg-slate-100 cursor-pointer">Community</li></Link>
+        <Link href="/advertise"><li className="inline-block text-slate-800 font-normal text-sm px-3 py-2 rounded-md hover:bg-slate-100 cursor-pointer">Advertise</li></Link>
        </ul>
 
        <div className="flex items-center gap-5 md:gap-8">
