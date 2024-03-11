@@ -9,7 +9,7 @@ const MoreStories = ({title}: {title:string}) => {
         </div>
         
         <main className="container mt-20 mb-10 max-w-7xl">
-            <h2 className="font-bold text-lg">{title}</h2>
+            <h2 className="font-bold cursor-pointer text-lg">{title}</h2>
 
             <div className="grid grid-cols-4 mt-8 w-full gap-20">
             <StoryCard title="The future of work is remote" author="John Doe" tag="Remote" img="https://picsum.photos/200/600" />

@@ -1,17 +1,25 @@
+"use client"
 import Image from "next/image";
 import Link from "next/link";
+import TopicsModal from "../Modals/TopicsModal/page";
+import { useState } from "react";
 
 export default function Hero() {
+  const [show, setShow] = useState(false);
   return (
     <main className="max-w-7xl container">
+      <TopicsModal show={show} />
       <div className="flex gap-6">
         <section className="flex w-full  border-r pr-20 min-h-screen  flex-col gap-3">
-            <div className="flex flex-col gap-1 mt-10 w-full rounded-lg bg-slate-100 px-4 py-9">
-                <h1 className="text-3xl font-semibold">Welcome to Aloy! 👋</h1>
-                <p className="text-sm">The place to launch and discover new tech products. <span className="text-blue-600 cursor-pointer">Take a tour.</span></p>
-            </div>
+          <div className="flex flex-col gap-1 mt-10 w-full rounded-lg bg-slate-100 px-4 py-9">
+            <h1 className="text-3xl font-semibold">Welcome to Aloy! 👋</h1>
+            <p className="text-sm">
+              The place to launch and discover new tech products.{" "}
+              <span className="text-blue-600 cursor-pointer">Take a tour.</span>
+            </p>
+          </div>
           <div className="flex mt-10  border-b pb-2.5 w-full items-center gap-6">
-            <svg width="19" height="19" className="">
+            <svg onClick={() => setShow(!show)} width="19" height="19" className="cursor-pointer">
               <path
                 d="M9 9H3v1h6v6h1v-6h6V9h-6V3H9v6z"
                 fill-rule="evenodd"
@@ -21,25 +29,25 @@ export default function Hero() {
               Hot pick
             </Link>
             <Link
-              href="/"
+              href="/following"
               className="text-sm text-primary hover:text-black capitalize"
             >
               following
             </Link>
             <Link
-              href="/"
+              href="/writing"
               className="text-sm text-primary hover:text-black capitalize"
             >
               writing
             </Link>
             <Link
-              href="/"
+              href="/programming"
               className="text-sm text-primary hover:text-black capitalize"
             >
               programming
             </Link>
             <Link
-              href="/"
+              href="/technology"
               className="text-sm text-primary hover:text-black capitalize"
             >
               technology
@@ -56,7 +64,7 @@ export default function Hero() {
               date="12th May 2021"
               slug="the-future-of-the-web-is-mobile"
             />
-             <BlogCard
+            <BlogCard
               title="Here’s all the software we use at our Series A startup"
               subtitle="Many first-time founders struggle with figuring out what tools to use to build their products and manage company operations. Having endless options for CRMs, knowledge bases, and design tools doesn’t make it any easier. If there’s one thing you shouldn’t be doing in the early ..."
               img="blog"
@@ -65,7 +73,7 @@ export default function Hero() {
               date="12th May 2021"
               slug="the-future-of-the-web-is-mobile"
             />
-             <BlogCard
+            <BlogCard
               title="Here’s all the software we use at our Series A startup"
               subtitle="Many first-time founders struggle with figuring out what tools to use to build their products and manage company operations. Having endless options for CRMs, knowledge bases, and design tools doesn’t make it any easier. If there’s one thing you shouldn’t be doing in the early ..."
               img="blog"
@@ -74,7 +82,7 @@ export default function Hero() {
               date="12th May 2021"
               slug="the-future-of-the-web-is-mobile"
             />
-             <BlogCard
+            <BlogCard
               title="Here’s all the software we use at our Series A startup"
               subtitle="Many first-time founders struggle with figuring out what tools to use to build their products and manage company operations. Having endless options for CRMs, knowledge bases, and design tools doesn’t make it any easier. If there’s one thing you shouldn’t be doing in the early ..."
               img="blog"
@@ -83,7 +91,7 @@ export default function Hero() {
               date="12th May 2021"
               slug="the-future-of-the-web-is-mobile"
             />
-             <BlogCard
+            <BlogCard
               title="Here’s all the software we use at our Series A startup"
               subtitle="Many first-time founders struggle with figuring out what tools to use to build their products and manage company operations. Having endless options for CRMs, knowledge bases, and design tools doesn’t make it any easier. If there’s one thing you shouldn’t be doing in the early ..."
               img="blog"
@@ -92,7 +100,7 @@ export default function Hero() {
               date="12th May 2021"
               slug="the-future-of-the-web-is-mobile"
             />
-             <BlogCard
+            <BlogCard
               title="Here’s all the software we use at our Series A startup"
               subtitle="Many first-time founders struggle with figuring out what tools to use to build their products and manage company operations. Having endless options for CRMs, knowledge bases, and design tools doesn’t make it any easier. If there’s one thing you shouldn’t be doing in the early ..."
               img="blog"
@@ -105,44 +113,82 @@ export default function Hero() {
         </section>
 
         <section className="flex flex-col w-[20%] mt-10 gap-3 pl-6">
-            <h2 className="uppercase text-primary text-[13px] font-semibold">top launches</h2>
-            <ul className="flex gap-4 mt-4 border-b pb-10 flex-col">
-                <Link className="hover:underline text-[13px] font-semibold" href='/'><li>{"Today's stories"}</li></Link>
-                <Link className="hover:underline text-[13px] font-semibold" href='/'><li>{"Yesterday's stories"}</li></Link>
-                <Link className="hover:underline text-[13px] font-semibold" href='/'><li>{"Last week's stories"}</li></Link>
-                <Link className="hover:underline text-[13px] font-semibold" href='/'><li>{"Last month's stories"}</li></Link>
-            </ul>
+          <h2 className="uppercase text-primary text-[13px] font-semibold">
+            top launches
+          </h2>
+          <ul className="flex gap-4 mt-4 border-b pb-10 flex-col">
+            <Link
+              className="hover:underline text-[13px] font-semibold"
+              href="/"
+            >
+              <li>{"Today's stories"}</li>
+            </Link>
+            <Link
+              className="hover:underline text-[13px] font-semibold"
+              href="/"
+            >
+              <li>{"Yesterday's stories"}</li>
+            </Link>
+            <Link
+              className="hover:underline text-[13px] font-semibold"
+              href="/"
+            >
+              <li>{"Last week's stories"}</li>
+            </Link>
+            <Link
+              className="hover:underline text-[13px] font-semibold"
+              href="/"
+            >
+              <li>{"Last month's stories"}</li>
+            </Link>
+          </ul>
 
-            <h2 className="uppercase text-primary mt-5 text-[13px] font-semibold">coming soon</h2>
-            <ul className="flex mt-3 border-b pb-10 flex-col gap-5">
-                <ComingCard title="Aloy commerce" subtitle="Aloy commerce is an e-commerce platform that integrates augmented reality (AR) for immersive product viewing experience. Customers can explore products in 3D using AR, allowing them to visualize how items will look in their own space before making a purchase." />
-                <ComingCard title="Aloy ai" subtitle="The ChatBot Service is a solution designed to be seamlessly integrated into any web application. It provides a chatbot interface that responds to user queries based using Artificial Intelligence." />
-                {/* <ComingCard title="AloyF" subtitle="The best way to sell online" /> */}
-            </ul>
+          <h2 className="uppercase text-primary mt-5 text-[13px] font-semibold">
+            coming soon
+          </h2>
+          <ul className="flex mt-3 border-b pb-10 flex-col gap-5">
+            <ComingCard
+              title="Aloy commerce"
+              subtitle="Aloy commerce is an e-commerce platform that integrates augmented reality (AR) for immersive product viewing experience. Customers can explore products in 3D using AR, allowing them to visualize how items will look in their own space before making a purchase."
+            />
+            <ComingCard
+              title="Aloy ai"
+              subtitle="The ChatBot Service is a solution designed to be seamlessly integrated into any web application. It provides a chatbot interface that responds to user queries based using Artificial Intelligence."
+            />
+            {/* <ComingCard title="AloyF" subtitle="The best way to sell online" /> */}
+          </ul>
 
-            <h2 className="uppercase text-primary mt-5 text-[13px] font-semibold">latest stories</h2>
-            <ul className="flex mt-3 border-b pb-10 flex-col gap-5">
+          <h2 className="uppercase text-primary mt-5 text-[13px] font-semibold">
+            latest stories
+          </h2>
+          <ul className="flex mt-3 border-b pb-10 flex-col gap-5">
             <LatestCard title="Google announce an open-source light weight version of its flagship AI" />
-            </ul>
+          </ul>
         </section>
       </div>
     </main>
   );
 }
 
-const ComingCard = ({title, subtitle}: {title: String, subtitle: String}) => (
-    <div className="flex flex-col gap-1">
-        <h2 className="text-sm font-semibold">{title}</h2>
-        <p className="text-[12px] leading-6">{subtitle}</p>
-    </div>  
-)
+const ComingCard = ({
+  title,
+  subtitle,
+}: {
+  title: String;
+  subtitle: String;
+}) => (
+  <div className="flex flex-col gap-1">
+    <h2 className="text-sm font-semibold">{title}</h2>
+    <p className="text-[12px] leading-6">{subtitle}</p>
+  </div>
+);
 
-const LatestCard = ({title}: {title:string}) => (
-    <div className="flex flex-col">
-        <h2 className="text-sm font-semibold">{title}</h2>
-        <p className="text-gray-600 mt-2 text-xs">3 min read</p>
-    </div>
-)
+const LatestCard = ({ title }: { title: string }) => (
+  <div className="flex flex-col">
+    <h2 className="text-sm font-semibold">{title}</h2>
+    <p className="text-gray-600 mt-2 text-xs">3 min read</p>
+  </div>
+);
 
 const BlogCard = ({
   title,
@@ -161,7 +207,10 @@ const BlogCard = ({
   date: String;
   slug: String;
 }) => (
-  <Link className="flex flex-col border-b pb-12 gap-1" href={`/stories/${slug}`}>
+  <Link
+    className="flex flex-col border-b pb-12 gap-1"
+    href={`/stories/${slug}`}
+  >
     <div className="flex">
       <div className="flex items-center gap-3 ">
         <Image
@@ -185,33 +234,50 @@ const BlogCard = ({
       />
       <div className="flex flex-col">
         <h2 className="text-xl mt-2 font-bold">{title}</h2>
-        <p className="text-primary font-normal leading-6 mt-1  text-sm md:text-[14px]">{subtitle}</p>
+        <p className="text-primary font-normal leading-6 mt-1  text-sm md:text-[14px]">
+          {subtitle}
+        </p>
       </div>
     </div>
     <div className="flex items-center mt-2 gap-4">
       <div className="flex gap-4 w-full items-center justify-between mt-5 md:mt-5">
         <div className="flex gap-3 items-center">
-          <div className="flex items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="grey"
-              className="w-5"
-              viewBox="0 0 13 12"
-            >
-              <path d="M10.99 5.126c0-2.422-2.236-4.376-5-4.376S1 2.714 1 5.126C1 7.537 3.236 9.5 6 9.5c.288 0 .576-.028.854-.076l.029.038 3.416 1.287-.182-2.05c-.058-.6.106-1.182.394-1.715A3.9 3.9 0 0 0 11 5.115l-.01.01Z"></path>
-            </svg>
-            <div className="text-xs">10</div>
-          </div>
+        <h2 className="text-primary cursor-pointer gap-0.5 text-sm items-end flex">
+          <svg width="24" fill='grey' height="24" viewBox="0 0 24 24"><path d="M18 16.8a7.14 7.14 0 0 0 2.24-5.32c0-4.12-3.53-7.48-8.05-7.48C7.67 4 4 7.36 4 11.48c0 4.13 3.67 7.48 8.2 7.48a8.9 8.9 0 0 0 2.38-.32c.23.2.48.39.75.56 1.06.69 2.2 1.04 3.4 1.04.22 0 .4-.11.48-.29a.5.5 0 0 0-.04-.52 6.4 6.4 0 0 1-1.16-2.65v.02zm-3.12 1.06l-.06-.22-.32.1a8 8 0 0 1-2.3.33c-4.03 0-7.3-2.96-7.3-6.59S8.17 4.9 12.2 4.9c4 0 7.1 2.96 7.1 6.6 0 1.8-.6 3.47-2.02 4.72l-.2.16v.26l.02.3a6.74 6.74 0 0 0 .88 2.4 5.27 5.27 0 0 1-2.17-.86c-.28-.17-.72-.38-.94-.59l.01-.02z"></path></svg>
+              90
+          </h2>
           <div className="bg-gray-300 w-1 h-1 rounded-full"></div>
-          <p className="text-gray-600 font-medium text-xs">
-            {tag}
-          </p>
+          <h2 className="text-primary text-sm items-end flex">
+            <svg
+              className="cursor-pointer"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              aria-label="clap"
+            >
+              <path
+                fill-rule="evenodd"
+                fill="grey"
+                clip-rule="evenodd"
+                d="M11.37.83L12 3.28l.63-2.45h-1.26zM15.42 1.84l-1.18-.39-.34 2.5 1.52-2.1zM9.76 1.45l-1.19.4 1.53 2.1-.34-2.5zM20.25 11.84l-2.5-4.4a1.42 1.42 0 0 0-.93-.64.96.96 0 0 0-.75.18c-.25.19-.4.42-.45.7l.05.05 2.35 4.13c1.62 2.95 1.1 5.78-1.52 8.4l-.46.41c1-.13 1.93-.6 2.78-1.45 2.7-2.7 2.51-5.59 1.43-7.38zM12.07 9.01c-.13-.69.08-1.3.57-1.77l-2.06-2.07a1.12 1.12 0 0 0-1.56 0c-.15.15-.22.34-.27.53L12.07 9z"
+              ></path>
+              <path
+                fill-rule="evenodd"
+                fill="grey"
+                clip-rule="evenodd"
+                d="M14.74 8.3a1.13 1.13 0 0 0-.73-.5.67.67 0 0 0-.53.13c-.15.12-.59.46-.2 1.3l1.18 2.5a.45.45 0 0 1-.23.76.44.44 0 0 1-.48-.25L7.6 6.11a.82.82 0 1 0-1.15 1.15l3.64 3.64a.45.45 0 1 1-.63.63L5.83 7.9 4.8 6.86a.82.82 0 0 0-1.33.9c.04.1.1.18.18.26l1.02 1.03 3.65 3.64a.44.44 0 0 1-.15.73.44.44 0 0 1-.48-.1L4.05 9.68a.82.82 0 0 0-1.4.57.81.81 0 0 0 .24.58l1.53 1.54 2.3 2.28a.45.45 0 0 1-.64.63L3.8 13a.81.81 0 0 0-1.39.57c0 .22.09.43.24.58l4.4 4.4c2.8 2.8 5.5 4.12 8.68.94 2.27-2.28 2.71-4.6 1.34-7.1l-2.32-4.08z"
+              ></path>
+            </svg>
+            5,000
+          </h2>
+          <div className="bg-gray-300 w-1 h-1 rounded-full"></div>
+          <p className="text-gray-600 font-medium text-xs">{tag}</p>
           <div className="bg-gray-300 w-1 h-1 rounded-full"></div>
           <p className="text-gray-600 text-xs">3 min read</p>
         </div>
         <svg
-          width="20"
-          height="20"
+          width="22"
+          height="22"
           className="cursor-pointer mr-12 md:mr-20"
           viewBox="0 0 24 24"
           fill="none"
