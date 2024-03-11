@@ -12,7 +12,7 @@ const NewStory = () => {
 
   return (
     <section className='container max-w-6xl mt-16'>
-       {isLoading ? <div>Loading...</div> : <CreateBlog/>}
+       {isLoading ? <div>Loading...</div> : <CreateBlog titles="" descriptions='' contents='' />}
     </section>
   )
 }
