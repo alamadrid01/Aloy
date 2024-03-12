@@ -1,9 +1,14 @@
+'use client'
+import CommunityModal from "@/components/Modals/CommunityModals/page";
+import TrendingTags from "@/components/TrendingTags/page";
 import Image from "next/image";
 import React from "react";
 
 const Community = () => {
+  const [show, setShow] = React.useState(false);
   return (
     <div className="container max-w-7xl flex mt-10 flex-col gap-3">
+      <CommunityModal show={show} />
       <h1 className="text-3xl font-bold">Community</h1>
       <p className="text-lg -mt-1">
         Ask questions, find support, and connect with the community.
@@ -12,7 +17,7 @@ const Community = () => {
         New discussion
       </button>
 
-      <section className="flex min-h-screen mt-20 gap-10">
+      <section className="flex mt-20 gap-10">
         <div className="w-full border-r pr-16">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-6">
@@ -64,7 +69,7 @@ const Community = () => {
               />
             </div>
           </div>
-          <div className="flex flex-col mt-8 gap-9 ">
+          <div className="flex flex-col mt-10 gap-9 ">
             <Discussions
               title="What do you prefer for marketing? Twitter or LinkedIn? And why? 🤷‍♂️"
               author="John Doe"
@@ -72,6 +77,7 @@ const Community = () => {
               replies={12}
               vote={5}
               image="https://picsum.photos/200/600"
+              click={() => setShow(!show)}
             />
              <Discussions
               title="What is  one tactic or approach that has significantly boosted your SaaS product's growth? 🚀"
@@ -80,6 +86,7 @@ const Community = () => {
               replies={12}
               vote={5}
               image="https://picsum.photos/200/600"
+              click={() => setShow(!show)}
             />
               <Discussions
                 title="How do you manage your time and stay productive as a remote worker? 🏡"
@@ -88,6 +95,7 @@ const Community = () => {
                 replies={12}
                 vote={5}
                 image="https://picsum.photos/200/600"
+                click={() => setShow(!show)}
               />
                  <Discussions
               title="What do you prefer for marketing? Twitter or LinkedIn? And why? 🤷‍♂️"
@@ -96,6 +104,7 @@ const Community = () => {
               replies={12}
               vote={5}
               image="https://picsum.photos/200/600"
+              click={() => setShow(!show)}
             />
              <Discussions
               title="What is  one tactic or approach that has significantly boosted your SaaS product's growth? 🚀"
@@ -104,6 +113,7 @@ const Community = () => {
               replies={12}
               vote={5}
               image="https://picsum.photos/200/600"
+              click={() => setShow(!show)}
             />
               <Discussions
                 title="How do you manage your time and stay productive as a remote worker? 🏡"
@@ -112,6 +122,7 @@ const Community = () => {
                 replies={12}
                 vote={5}
                 image="https://picsum.photos/200/600"
+                click={() => setShow(!show)}
               />
                  <Discussions
               title="What do you prefer for marketing? Twitter or LinkedIn? And why? 🤷‍♂️"
@@ -120,6 +131,7 @@ const Community = () => {
               replies={12}
               vote={5}
               image="https://picsum.photos/200/600"
+              click={() => setShow(!show)}
             />
              <Discussions
               title="What is  one tactic or approach that has significantly boosted your SaaS product's growth? 🚀"
@@ -128,6 +140,7 @@ const Community = () => {
               replies={12}
               vote={5}
               image="https://picsum.photos/200/600"
+              click={() => setShow(!show)}
             />
               <Discussions
                 title="How do you manage your time and stay productive as a remote worker? 🏡"
@@ -136,16 +149,29 @@ const Community = () => {
                 replies={12}
                 vote={5}
                 image="https://picsum.photos/200/600"
+                click={() => setShow(!show)}
               />
           </div>
         </div>
-        <div className="w-[20%]"></div>
+        <div className="w-[20%] flex  flex-col">
+          <div className="flex pb-7 border-b flex-col">
+            <h3 className="uppercase text-primary text-sm font-medium">{"You're on a"}</h3>
+            <h3 className="font-semibold text-lg">{"Hot streak"}⚡️</h3>
+            <p className="text-primary mt-3 cursor-pointer text-xs">Visit streak ranking →</p>
+          </div>
+          <div className="flex flex-col gap-6">
+            <h3 className="text-primary text-sm uppers font-semibold">Trending tags</h3>
+            <TrendingTags />
+          </div>
+        </div>
       </section>
     </div>
   );
 };
 
 export default Community;
+
+
 
 const Discussions = ({
   title,
@@ -154,6 +180,7 @@ const Discussions = ({
   replies,
   vote,
   image,
+  click
 }: {
   title: string;
   author: string;
@@ -161,9 +188,13 @@ const Discussions = ({
   replies: number;
   vote: number;
   image: string;
+  click: () => void;
 }) => {
+  const handleClick = () => {
+    click();
+  };
   return (
-    <div className="flex items-center gap-8">
+    <div onClick={handleClick} className="flex cursor-pointer items-center gap-8">
       <div>
         <Image
           width={40}
