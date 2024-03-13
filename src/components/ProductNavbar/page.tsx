@@ -65,7 +65,7 @@ const ProductNavbar = ({text = 'stories'}: {text:string}) => {
                   History
                 </Link>
                 <p className="border-b my-2"></p>
-                <Link href="/settings" className="flex hover:bg-slate-100 cursor-pointer py-2 px-2 rounded-md items-center gap-2 text-black font-normal text-sm">
+                <Link href="/help-center" className="flex hover:bg-slate-100 cursor-pointer py-2 px-2 rounded-md items-center gap-2 text-black font-normal text-sm">
                 <svg data-testid="HelpIcon" color="inherit" width="14" height="14" viewBox="0 0 24 24"><path d="M11.15 20.571C10.2113 20.571 9.45 21.3386 9.45 22.2852C9.45 23.2318 10.2113 24 11.15 24C12.0887 24 12.85 23.2318 12.85 22.2852C12.85 21.3386 12.0903 20.571 11.15 20.571ZM14.72 0H9.025C5.97881 0 3.5 2.49959 3.5 5.5713V6.42843C3.5 7.14091 4.07109 7.71411 4.775 7.71411C5.47891 7.71411 6.05 7.14091 6.05 6.42843V5.5713C6.05 3.91706 7.3845 2.57137 9.025 2.57137H14.72C16.4997 2.57137 17.95 4.03384 17.95 5.82844C17.95 7.04234 17.2891 8.14643 16.2234 8.71106L12.3719 10.7569C10.7834 11.5712 9.875 13.1729 9.875 14.9247V15.8568C9.875 16.5666 10.4461 17.143 11.15 17.143C11.8539 17.143 12.425 16.5693 12.425 15.8568V14.9247C12.425 14.127 12.86 13.3995 13.5608 13.0277L17.4108 10.9846C19.3153 9.97478 20.5 7.99804 20.5 5.82844C20.5 2.61476 17.9075 0 14.72 0Z"></path></svg>
                   Help center
                 </Link>
