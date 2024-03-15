@@ -9,6 +9,22 @@ const ProductNavbar = ({text = 'stories'}: {text:string}) => {
   const [showNotification, setShowNotification] = React.useState(false);
   const [isProfile, setIsProfile] = React.useState(true);
 
+  const searchBarRef = React.useRef<HTMLInputElement>(null);
+
+  React.useEffect(() => {
+    const handleShortcut = (event:any) => {
+      if (event.ctrlKey && event.key === '/') {
+        searchBarRef.current?.focus(); 
+      }
+    };
+
+    document.addEventListener('keydown', handleShortcut);
+
+    return () => {
+      document.removeEventListener('keydown', handleShortcut);
+    };
+  }, []);
+
   const pathname = usePathname();
 
   React.useEffect (() => {
@@ -19,6 +35,7 @@ const ProductNavbar = ({text = 'stories'}: {text:string}) => {
     }
     
   }, [pathname])
+  
 
   return (
     <div  className={`md:px-10 px-7 py-3 border-b w-full bg-white z-10 flex justify-between items-center`}>
@@ -27,7 +44,7 @@ const ProductNavbar = ({text = 'stories'}: {text:string}) => {
        {/* <Image src='/images/test_logo.svg' width={38} height={80} alt='my image' /> */}
        <div className="flex border border-slate-300 w-[259px] py-1.5 px-3 rounded-[20px]">
             <svg xmlns="http://www.w3.org/2000/svg" width='20px' viewBox="0 0 24 24" id="search"><path fill="#b1b1bb" d="M21.71,20.29,18,16.61A9,9,0,1,0,16.61,18l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,21.71,20.29ZM11,18a7,7,0,1,1,7-7A7,7,0,0,1,11,18Z"></path></svg>
-                <input type="text" name="" id="" className='w-full ml-3 bg-transparent placeholder:text-sm placeholder:font-normal placeholder:text-slate-800 text-black outline-none' placeholder={`Search ${text}`} />
+                <input ref={searchBarRef} type="text" name="" id="" className='w-full ml-3 bg-transparent placeholder:text-sm placeholder:font-normal placeholder:text-slate-800 text-black outline-none' placeholder={`Search ${text}`} />
             </div>
        </div>
 
