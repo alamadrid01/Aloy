@@ -23,8 +23,11 @@ export const authOptions = {
   secret: process.env.SECRET,
   callbacks: {
     async signIn({ user, account, profile }: any) {
+      console.log(profile);
       const response = await fetch(`http://localhost:3000/api/register?email=${profile.email}`);
       const data = await response.json();
+
+      console.log(data.message);
 
       if (data.message !== "User not found") {
         return true;
@@ -33,7 +36,6 @@ export const authOptions = {
           firstName: profile.given_name,
           lastName: profile.family_name,
           email: profile.email,
-          password: profile.at_hash,
           avatar: profile.picture,
         };
 

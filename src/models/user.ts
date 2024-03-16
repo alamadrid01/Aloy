@@ -107,6 +107,15 @@ const userProfileSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    email: {
+        type:String,
+        required: true,
+        unique: true
+    },
+    avatar: {
+        type: String,
+        required: true
+    },
     blogs: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Blog'
@@ -133,10 +142,10 @@ const userProfileSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-const Blog = mongoose.model("Blog", blogSchema);
-const Comments = mongoose.model("Comments", commentSchema);
-const Reply = mongoose.model("Reply", replySchema);
-const Upvote = mongoose.model("Upvote", upvoteSchema);
-const UserProfile = mongoose.model("UserProfile", userProfileSchema);
+const Blog = mongoose.models.Blog || mongoose.model("Blog", blogSchema);
+const Comments = mongoose.models.Comments || mongoose.model("Comments", commentSchema);
+const Reply = mongoose.models.Reply || mongoose.model("Reply", replySchema);
+const Upvote = mongoose.models.Upvote || mongoose.model("Upvote", upvoteSchema);
+const UserProfile = mongoose.models.UserProfile || mongoose.model("UserProfile", userProfileSchema);
 
-module.exports = { Blog, Comments, Reply, Upvote, UserProfile };
+module.exports = { Blog, Comments, Reply, Upvote, UserProfile }

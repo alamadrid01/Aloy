@@ -41,7 +41,7 @@ async function connectDB() {
         return mongoose;
       })
       .catch((error) => {
-        console.error("❌");
+        console.error("❌", error);
         throw error;
       });
   }

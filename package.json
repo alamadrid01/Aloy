@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
+    "minisearch": "^6.3.0",
     "mongodb": "^6.5.0",
     "mongoose": "^8.2.1",
     "next": "13.5.4",
