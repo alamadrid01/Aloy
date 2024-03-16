@@ -3,11 +3,26 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation';
 import React from 'react'
+import { signOut, useSession } from 'next-auth/react';
+import { UserContext } from '@/context/context';
 
 const ProductNavbar = ({text = 'stories'}: {text:string}) => {
   const [showList, setShowList] = React.useState(false);
   const [showNotification, setShowNotification] = React.useState(false);
   const [isProfile, setIsProfile] = React.useState(true);
+  const [avatar, setAvatar] = React.useState<string>("" as string);
+
+  const {setUser} = React.useContext(UserContext);
+
+  const { data: session, status } = useSession()
+
+  React.useEffect(() => {
+    if(session && session.user){
+      setUser(session.user)
+      setAvatar(session.user.image as string)
+    }
+    
+  }, [session, status])
 
   const searchBarRef = React.useRef<HTMLInputElement>(null);
 
@@ -59,10 +74,13 @@ const ProductNavbar = ({text = 'stories'}: {text:string}) => {
           isProfile ? <div className="flex gap-2 cursor-pointer hover:underline text-sm items-center">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-label="Write"><path d="M14 4a.5.5 0 0 0 0-1v1zm7 6a.5.5 0 0 0-1 0h1zm-7-7H4v1h10V3zM3 4v16h1V4H3zm1 17h16v-1H4v1zm17-1V10h-1v10h1zm-1 1a1 1 0 0 0 1-1h-1v1zM3 20a1 1 0 0 0 1 1v-1H3zM4 3a1 1 0 0 0-1 1h1V3z" fill="currentColor"></path><path d="M17.5 4.5l-8.46 8.46a.25.25 0 0 0-.06.1l-.82 2.47c-.07.2.12.38.31.31l2.47-.82a.25.25 0 0 0 .1-.06L19.5 6.5m-2-2l2.32-2.32c.1-.1.26-.1.36 0l1.64 1.64c.1.1.1.26 0 .36L19.5 6.5m-2-2l2 2" stroke="currentColor"></path></svg>
             Write
-          </div> :        <svg width="24" height="24" onClick={() => setShowNotification(!showNotification)}  className='cursor-pointer' viewBox="0 0 24 24" fill="none"><path d="M17.5 1.25a.5.5 0 0 1 1 0v2.5H21a.5.5 0 0 1 0 1h-2.5v2.5a.5.5 0 0 1-1 0v-2.5H15a.5.5 0 0 1 0-1h2.5v-2.5zm-11 4.5a1 1 0 0 1 1-1H11a.5.5 0 0 0 0-1H7.5a2 2 0 0 0-2 2v14a.5.5 0 0 0 .8.4l5.7-4.4 5.7 4.4a.5.5 0 0 0 .8-.4v-8.5a.5.5 0 0 0-1 0v7.48l-5.2-4a.5.5 0 0 0-.6 0l-5.2 4V5.75z" fill="#000"></path></svg>
+          </div> : <svg width="24" height="24" onClick={() => setShowNotification(!showNotification)}  className='cursor-pointer' viewBox="0 0 24 24" fill="none"><path d="M17.5 1.25a.5.5 0 0 1 1 0v2.5H21a.5.5 0 0 1 0 1h-2.5v2.5a.5.5 0 0 1-1 0v-2.5H15a.5.5 0 0 1 0-1h2.5v-2.5zm-11 4.5a1 1 0 0 1 1-1H11a.5.5 0 0 0 0-1H7.5a2 2 0 0 0-2 2v14a.5.5 0 0 0 .8.4l5.7-4.4 5.7 4.4a.5.5 0 0 0 .8-.4v-8.5a.5.5 0 0 0-1 0v7.48l-5.2-4a.5.5 0 0 0-.6 0l-5.2 4V5.75z" fill="#000"></path></svg>
         }
-        <Image src='/images/human.png' onClick={() => setShowList(!showList)} className='rounded-full cursor-pointer' width={22} height={22} alt='my image' />
+       {
+          avatar ? <Image onClick={() => setShowList(!showList)} src={avatar} width={30} height={30} alt="user image" className="rounded-full cursor-pointer" />: 
+         <Link href="/login">  <Image src='/images/human.png' className='rounded-full cursor-pointer' width={22} height={22} alt='my image' /> </Link>
 
+       }
         {
             showList && (
               <div className="fixed top-[50px] right-4 py-5 px-4 rounded-lg bg-white w-[15rem] min-h-[5rem] shadow-lg ">
@@ -87,9 +105,12 @@ const ProductNavbar = ({text = 'stories'}: {text:string}) => {
                   Help center
                 </Link>
                 <button onClick={
-                  () => {
-                    localStorage.removeItem("blog_project")
-                    window.location.assign("/")
+                  (e) => {
+                    e.preventDefault()
+                    signOut({
+                      callbackUrl: `${window.location.origin}/`
+                    })
+                    setUser(null)
                   }
                 } className="flex hover:bg-slate-100 cursor-pointer py-2 px-2 rounded-md items-center gap-2 text-red-600 font-normal text-sm">
                 <svg data-testid="ExitingIcon" color="red" fill="red" width="14" height="14" viewBox="0 0 24 24"><path d="M16.375 12C16.375 12.9665 15.6085 13.75 14.663 13.75H5.83696C4.89147 13.75 4.125 12.9665 4.125 12C4.125 11.0335 4.89147 10.25 5.83696 10.25H14.663C15.6085 10.25 16.375 11.0335 16.375 12Z"></path><path d="M11.6376 18.4874C10.9541 17.804 10.9541 16.696 11.6376 16.0126L15.6501 12L11.6376 7.98744C10.9541 7.30402 10.9541 6.19598 11.6376 5.51256C12.321 4.82915 13.429 4.82915 14.1124 5.51256L19.3624 10.7626C20.0459 11.446 20.0459 12.554 19.3624 13.2374L14.1124 18.4874C13.429 19.1709 12.321 19.1709 11.6376 18.4874Z"></path></svg>

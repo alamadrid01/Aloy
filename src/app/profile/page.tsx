@@ -1,12 +1,28 @@
 "use client"
+import PageSkeleton from '@/components/LoadingSkeleton/RegisterSkeleton/page'
 import ProfileModal from '@/components/Modals/ProfileModal/page'
+import { UserContext } from '@/context/context'
+import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 
 const Profile = () => {
   const [show, setShow] = React.useState(false);
+
+  const {user} = React.useContext(UserContext);
+
+  const {data: session, status} =  useSession();
+
+  if(status == "unauthenticated"){
+    window.location.assign("/login")
+  }
+
+  if (!user) {
+    return <PageSkeleton />
+  }
+
 
   return (
     <div className='flex gap-20 container max-w-7xl min-h-screen'>

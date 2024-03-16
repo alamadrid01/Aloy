@@ -1,9 +1,23 @@
 "use client"
-import { signIn } from 'next-auth/react'
+import PageSkeleton from '@/components/LoadingSkeleton/RegisterSkeleton/page'
+import { UserContext } from '@/context/context'
+import { signIn, useSession } from 'next-auth/react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 const Login = () => {
+  const {user} = React.useContext(UserContext);
+  const { push } = useRouter()
+  const {data: session, status} = useSession()
+
+  if(status === 'loading') return <PageSkeleton />
+
+
+  if (user) {
+   push('/profile')
+  }
+
   return (
     <div className='max-w-[1900px] container min-h-screen grid md:grid-cols-2 '>
         <section className="flex flex-col gap-2 items-center justify-center">
