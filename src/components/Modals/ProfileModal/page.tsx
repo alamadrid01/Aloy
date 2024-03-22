@@ -1,10 +1,31 @@
 "use client"
+import { UserContext } from '@/context/context';
 import Image from 'next/image'
-import React, { use, useEffect, useRef, useState } from 'react'
+import React, { use, useContext, useEffect, useRef, useState } from 'react'
 
 const ProfileModal = ({show}: {show:boolean}) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const {user, username} = useContext(UserContext);
+
     const [isShow, setIsShow] = useState(show);
+    const [changeableUsername, setChangeableUsername] = useState('');
+
+    useEffect(() => {
+        adjustTextareaHeight();
+    }, []);
+
+    useEffect(() => {
+        setIsShow(show);
+    }, [show]);
+
+    useEffect(() => {
+        setChangeableUsername(username);
+    }, [username])
+
+
+    if(!user) return null;
+
+
     
     const adjustTextareaHeight = () => {
         const textarea = textareaRef.current;
@@ -16,13 +37,6 @@ const ProfileModal = ({show}: {show:boolean}) => {
         adjustTextareaHeight();
     };
 
-    useEffect(() => {
-        adjustTextareaHeight();
-    }, []);
-
-    useEffect(() => {
-        setIsShow(show);
-    }, [show]);
 
   return (
     <div onClick={(e) => { e.preventDefault(); setIsShow(false); }} className={` ${isShow ? 'flex' : 'hidden'} fixed inset-0 bg-black bg-opacity-40 w-full h-screen items-center justify-center`}>
@@ -30,14 +44,14 @@ const ProfileModal = ({show}: {show:boolean}) => {
             <h2 className="font-semibold text-center text-lg">Profile information</h2>
             <h4 className="text-primary text-sm font-medium">Photo</h4>
             <div className="flex gap-5 items-start">
-                <Image width={50} height={50} src="/images/human.png" alt="human" className="rounded-full " />
+                <Image width={50} height={50} src={user.image} alt="human" className="rounded-full " />
                 <div className="flex gap-3">
                     <h3 className="text-sm cursor-pointer hover:underline text-green-600 font-medium">Update</h3>
                     <h4 className="text-sm cursor-pointer hover:underline text-red-600 font-medium">Remove</h4>
                 </div>
                 </div>
             <h4 className="text-primary mt-2 text-sm font-medium">Username</h4>
-            <input type="text" className="border-b w-full py-1 text-sm font-medium focus:outline-none focus:border-black" value={"Adebayoalameen"} />
+            <input type="text" className="border-b w-full py-1 text-sm font-medium focus:outline-none focus:border-black" value={changeableUsername} onChange={(e) => setChangeableUsername(e.target.value)} />
             <p className="text-primary w-full flex justify-between -mt-3 text-[13px]">Appears on your Profile page, as your byline, and in your responses. <span className=''>14/50</span></p>
 
             <h4 className="text-primary mt-5 text-sm font-medium">Bio</h4>

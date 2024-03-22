@@ -23,7 +23,6 @@ export async function POST(request: any){
 
 export async function GET(request: any){
     const userEmail = request.nextUrl.searchParams.get('email');
-    console.log('email', userEmail);
    try{
     await connectDB();
 

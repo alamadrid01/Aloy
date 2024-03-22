@@ -10,11 +10,14 @@ export const UserProvider: any = ({ children }: any) => {
 
 
   const [user, setUser] = useState<any>(null);
+  const [username, setUsername] = useState('')
 
 
   const pass_value = {
     user,
-    setUser
+    setUser,
+    username,
+    setUsername
   };
 
   return (

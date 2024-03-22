@@ -116,6 +116,18 @@ const userProfileSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    bio: {
+        type: String,
+        required: true
+    },
+    following: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'UserProfile'
+    }],
+    followers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'UserProfile'
+    }],
     blogs: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Blog'

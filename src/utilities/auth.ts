@@ -27,8 +27,6 @@ export const authOptions = {
       const response = await fetch(`http://localhost:3000/api/register?email=${profile.email}`);
       const data = await response.json();
 
-      console.log(data.message);
-
       if (data.message !== "User not found") {
         return true;
       } else {
