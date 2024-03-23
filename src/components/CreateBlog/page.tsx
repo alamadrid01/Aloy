@@ -12,10 +12,12 @@ const CreateBlog = ({
   titles,
   descriptions,
   contents,
+  blogId,
 }: {
   titles: string;
   descriptions: string;
   contents: string;
+  blogId: string;
 }) => {
   const quillRef = React.useRef<any>(null);
   const [value, setValue] = React.useState<string>("");
@@ -80,6 +82,7 @@ const CreateBlog = ({
   }, [titles, descriptions, contents]);
 
   const handleUpload = async () => {
+    console.log('upload is the called function')
     if(!title || !description || !value || !image) return setError(true)
     setError(false)
     setIsLoading(true)
@@ -117,6 +120,45 @@ const CreateBlog = ({
     }catch(err){
       console.log(err)
     }
+  }
+
+  const handleEdit = async () =>{
+    console.log('edit is the called function')
+    if(!title || !description || !value || !blogId) return setError(true)
+    setError(false)
+    setIsLoading(true)
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("content", value);
+    formData.append("id", blogId);
+
+
+    try{
+      const upload = await fetch("/api/blog", {
+        method: "PUT",
+        body: formData })
+
+        console.log(upload.status)
+        if(upload.status === 200){
+          toast.success('Blog updated successfully')
+          setTimeout(() => {
+            window.location.href = `/stories/${blogId}`
+          }, 800)
+        }else if(upload.status === 404){
+          toast.error('Blog not found')
+        }else if(upload.status === 500){
+          toast.error('An error occurred while updating blog')
+        }
+
+        setIsLoading(false) 
+        const data = await upload.json()
+        // console.log(data)
+        }catch(err){
+          console.log(err)
+        }
+
   }
 
   return (
@@ -211,7 +253,9 @@ const CreateBlog = ({
           {titles !== "" && descriptions !== "" && contents !== "" ? "Updating..." : "Creating..."}
         </button>
       ) : (
-        <button onClick={handleUpload} className="py-3 border border-slate-300 text-black px-7 rounded-lg hover:bg-slate-200  mt-6 self-end">
+        <button onClick={() => {
+          titles && descriptions && contents ? handleEdit() : handleUpload()
+        } } className="py-3 border border-slate-300 text-black px-7 rounded-lg hover:bg-slate-200  mt-6 self-end">
           {titles !== "" && descriptions !== "" && contents !== "" ? "Update" : "Create"}
         </button>
       ) : null}

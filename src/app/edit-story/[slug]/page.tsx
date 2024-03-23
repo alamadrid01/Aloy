@@ -1,23 +1,39 @@
 "use client"
 import CreateBlog from '@/components/CreateBlog/page'
+import PageSkeleton from '@/components/LoadingSkeleton/RegisterSkeleton/page'
 import React from 'react'
+import {toast, ToastContainer} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const EditStory = ({params}: {params: {slug:string}}) => {
-  const [show, setShow] = React.useState<boolean>(false)
+  const [show, setShow] = React.useState<boolean>(false);
+  const [data, setData] = React.useState<any>({})
 
   React.useEffect(() => {
-    setShow(true)
+    
+    (async () => {
+      const  blogData = await fetch(`/api/blog/?id=${params.slug}`)
+      console.log(blogData.status)
+      setShow(true)
+
+      const fetchedData = await blogData.json()
+      if(blogData.status === 200){
+        setData(fetchedData);
+      // console.log(fetchedData);
+      }else{
+        toast.error('Error occured while fetching the data')
+      }
+    })()
+
   }, [])
 
   return (
     <div className='container mt-20 max-w-6xl'>
+      <ToastContainer />
       <h1 className='font-semibold text-lg'>Edit Story</h1>
      {
-      show &&  <CreateBlog titles='Sample blog' descriptions='This is a sample content' contents='`Many first-time founders struggle with figuring out what tools to use to build their products and manage company operations. Having endless options for CRMs, knowledge bases, and design tools doesn’t make it any easier. If there’s one thing you shouldn’t be doing in the early stages of your company, it’s wasting hours doing due diligence for software.
-      We were in that spot a few years ago when we started CommandBar. Luckily, having access to YC’s network made the chore much easier since founders who’ve gone through the process are always happy to share recommendations (much more concisely and honestly than comparison tables can 😉).
-      Innovate on your product, go with something standard for the products you buy (for the most part, unless you have an extremely custom need in some area).
-      Here’s a list of the software we use (and love), from the first days of CommandBar, up until today. Use this as a guide if you’re wondering whether you should pay for a tool for doing X.' />
-     }
+      show ? <CreateBlog blogId={params.slug} titles={data?.title} descriptions={data?.description} contents={data?.content} /> : <PageSkeleton />
+    }
     </div>
   )
 }

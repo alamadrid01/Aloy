@@ -49,10 +49,10 @@ const Profile = () => {
                   blogs.map((blog: any) => {
                     // console.log(blog)
                     return <div key={blog._id} className="flex items-center justify-between">
-                      <Link href={`/blog/${blog._id}`} className="hover:underline text-black cursor-pointer">{blog.title}</Link>
+                      <Link href={`/stories/${blog._id}`} className="hover:underline text-black cursor-pointer">{blog.title}</Link>
                       <div className="flex items-center gap-5">
                       {/* <span className="text-primary font-normal text-xs">{new Date(blog.createdAt).toDateString()}</span> */}
-                      <button className="border py-1 px-4 border-green-600 text-green-600 rounded-md  font-medium text-sm hover:bg-green-600 hover:text-white ">Edit</button>
+                      <button onClick={() => window.location.href= `/edit-story/${blog._id}`} className="border py-1 px-4 border-green-600 text-green-600 rounded-md  font-medium text-sm hover:bg-green-600 hover:text-white ">Edit</button>
                       <button className="border py-1 px-3 border-red-600 text-white bg-red-700 rounded-md font-medium text-sm">Delete</button>
                       </div>
                       </div>

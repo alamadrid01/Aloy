@@ -102,6 +102,54 @@ export async function POST(request: any){
         return NextResponse.json({message: 'An error occurred'}, {status: 500})
     }
 
-
-
 }   
+
+
+export async function GET(request: any){
+    const id = await request.nextUrl.searchParams.get('id')
+    console.log('this is the id', id)
+    if(Mongoose.Types.ObjectId.isValid(id) === false) return NextResponse.json({message: 'Invalid user id'}, {status: 400})
+
+    await connectDB()
+    const blog = await BlogSchema.findOne({_id: id})
+
+    if(!blog) return NextResponse.json({message: 'Blog not found'}, {status: 404})
+
+    return NextResponse.json(blog, {status: 200})
+}
+
+
+export async function PUT(request: any){
+    const formData = await request.formData()
+
+    const title = formData.get('title')
+    const description = formData.get('description')
+    const content = formData.get('content')
+    const id = formData.get('id')
+
+    if(Mongoose.Types.ObjectId.isValid(id) === false) return NextResponse.json({message: 'Invalid blog id'}, {status: 400})
+
+    if(!title || !description || !content){
+        return NextResponse.json(
+            {message: 'Please fill in all fields'},
+            {status: 400}
+        )
+    }
+
+    await connectDB()
+
+    try{
+        const blog = await BlogSchema.findByIdAndUpdate(id, {
+            title,
+            description,
+            content
+        }, {new: true}).exec()
+
+        if(!blog) return NextResponse.json({message: 'Blog not found'}, {status: 404})
+
+        return NextResponse.json(blog, {status: 200})
+
+        }catch(err){
+            return NextResponse.json({message: 'An error occurred'}, {status: 500})
+        }
+        }
