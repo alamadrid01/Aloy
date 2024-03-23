@@ -1,6 +1,9 @@
 "use client";
+import { UserContext } from "@/context/context";
 import React, { ChangeEvent, useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
+import {toast, ToastContainer} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const ReactQuill =
   typeof window === "object" ? require("react-quill") : () => false;
@@ -20,6 +23,9 @@ const CreateBlog = ({
   const [error, setError] = React.useState<boolean>(false);
   const [title, setTitle] = React.useState<string>("");
   const [description, setDescription] = React.useState<string>("");
+  const [loading, setIsLoading] = React.useState<boolean>(false);
+  
+  const {userId} = React.useContext(UserContext)
 
   const modules = {
     toolbar: [
@@ -73,8 +79,49 @@ const CreateBlog = ({
     }
   }, [titles, descriptions, contents]);
 
+  const handleUpload = async () => {
+    if(!title || !description || !value || !image) return setError(true)
+    setError(false)
+    setIsLoading(true)
+    
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("content", value);
+    formData.append("image", image);
+    formData.append("id", userId);
+    formData.append("tags", ['blog', 'computing'].toString());
+
+    try{
+      const upload = await fetch("/api/blog", {
+        method: "POST",
+        body: formData })
+
+        console.log(upload.status)
+        if(upload.status === 201){
+          toast.success('Blog created successfully')
+          setTitle('')
+          setDescription('')
+          setValue('')
+          setImage(null)
+        }else if(upload.status === 409){
+          toast.error('Blog title already exists')
+        }else if(upload.status === 500){
+          toast.error('An error occurred while creating blog')
+        }
+
+        setIsLoading(false) 
+        const data = await upload.json()
+        console.log(data)
+
+    }catch(err){
+      console.log(err)
+    }
+  }
+
   return (
     <div className="w-full flex flex-col">
+      <ToastContainer />
       {titles == "" && descriptions == "" && contents == "" && (
         <form className="flex flex-col gap-3 mt-9">
           <label className="-mb-2 font-medium" htmlFor="image">
@@ -159,8 +206,12 @@ const CreateBlog = ({
           ref={quillRef}
         />
       )}
-      {value !== "" && title !== "" && description !== "" ? (
-        <button className="py-3 border border-slate-300 text-black px-7 rounded-lg hover:bg-slate-200  mt-6 self-end">
+      {value !== "" && title !== "" && description !== "" ? loading ? (
+        <button disabled className="py-3 border border-green-600 px-7 text-white rounded-lg bg-green-600  mt-6 self-end">
+          {titles !== "" && descriptions !== "" && contents !== "" ? "Updating..." : "Creating..."}
+        </button>
+      ) : (
+        <button onClick={handleUpload} className="py-3 border border-slate-300 text-black px-7 rounded-lg hover:bg-slate-200  mt-6 self-end">
           {titles !== "" && descriptions !== "" && contents !== "" ? "Update" : "Create"}
         </button>
       ) : null}

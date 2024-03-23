@@ -17,6 +17,7 @@ export const UserProvider: any = ({ children }: any) => {
   const [email, setEmail] = useState('');
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
+  const [userId, setUserId] = useState('');
 
 
   const pass_value = {
@@ -35,7 +36,10 @@ export const UserProvider: any = ({ children }: any) => {
     followers,
     setFollowers,
     following,
-    setFollowing
+    setFollowing,
+    userId,
+    setUserId
+
   };
 
   return (

@@ -1,10 +1,18 @@
 "use client"
 import CreateBlog from '@/components/CreateBlog/page'
+import FetchDataHOC from '@/components/FetchDataHOC/page'
+import PageSkeleton from '@/components/LoadingSkeleton/RegisterSkeleton/page'
+import { UserContext } from '@/context/context'
 import React from 'react'
 
 
-const NewStory = () => {
+const NewStory = (props: any) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(true)
+  const {id} = props
+
+  // console.log('this is the id', id)
+
+  const {email} = React.useContext(UserContext)
 
   React.useEffect(() => {
     setIsLoading(false)
@@ -12,9 +20,9 @@ const NewStory = () => {
 
   return (
     <section className='container max-w-6xl mt-16'>
-       {isLoading ? <div>Loading...</div> : <CreateBlog titles="" descriptions='' contents='' />}
+       {isLoading ? <PageSkeleton />: <CreateBlog titles="" descriptions='' contents='' />}
     </section>
   )
 }
 
-export default NewStory
+export default FetchDataHOC(NewStory)

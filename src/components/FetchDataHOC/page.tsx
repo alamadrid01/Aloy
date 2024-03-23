@@ -12,9 +12,10 @@ const FetchDataHOC = (WrappedComponent: any) => {
         const [loading, setLoading] = useState(true);
         const [dataFetched, setDataFetched] = useState(false); // New state
         const [error, setError] = useState(false);
+        const [userId, setUserNewId] = useState<string | null>(null);
         // const [user, setUser] = useState<any>(null);
 
-        const { user, setFirstName, setLastName, setBio, setFollowers, setFollowing } = useContext(UserContext);
+        const { user, setFirstName, setLastName, setUserId, setBio, setFollowers, setFollowing } = useContext(UserContext);
         const { push } = useRouter();
 
         const {data: session, status} =  useSession();
@@ -38,13 +39,15 @@ const FetchDataHOC = (WrappedComponent: any) => {
                     setBio(data[0].bio);
                     setFollowers(data[0].followers);
                     setFollowing(data[0].following);
+                    setUserId(data[0]._id);
+                    setUserNewId(data[0]._id);
                 } else {
                     setError(true);
                 }
             })();
         }, [user]);
 
-        return loading ? <PageSkeleton /> : <WrappedComponent {...props} loading={loading} dataFetched={dataFetched} error={error} />;
+        return loading ? <PageSkeleton /> : <WrappedComponent {...props} loading={loading} id={userId} dataFetched={dataFetched} error={error} />;
 }
 
 WithDataFetching.displayName = `WithDataFetching(${getDisplayName(

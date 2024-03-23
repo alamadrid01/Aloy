@@ -6,6 +6,7 @@ const BioModal = ({show}: {show: boolean}) => {
     const [value, setValue] = React.useState(0);
     const [isShow, setIsShow] = React.useState(show);
     const [bios, setBios] = React.useState('');
+    const [loading, setIsLoading] = React.useState(false);
 
     const {user, bio, setBio, setUser} = React.useContext(UserContext);
 
@@ -17,6 +18,7 @@ const BioModal = ({show}: {show: boolean}) => {
 
 
     const handleBio = async () => {
+        setIsLoading(true);
         const response = await fetch('/api/bio', {
             method: 'POST',
             headers: {
@@ -25,6 +27,7 @@ const BioModal = ({show}: {show: boolean}) => {
             body: JSON.stringify({email: user?.email, bio: bios})
         });
 
+        setIsLoading(false);
         const data = await response.json();
         if(response.status === 200) {
             setBio(data.message.bio);
@@ -46,7 +49,7 @@ const BioModal = ({show}: {show: boolean}) => {
             <textarea maxLength={400} value={bios} onChange={handleTextChange} className='resize-none border rounded-md mt-3 py-3 px-4 focus:outline-none focus:border-slate-400 placeholder:text-[15px] placeholder:italic' placeholder='I go by the name Stone whose family hails from Antarctica' cols={30} rows={10}></textarea>
             <p className="text-xs -mt-3 text-right text-slate-500 font-medium">{value}/400</p>
             <div className="flex self-end gap-4 mt-8">
-                <button onClick={handleBio} className="bg-green-700 text-white w-fit px-6 font-medium hover:bg-opacity-80 text-sm py-2 rounded-[15px]">Add bio</button>
+                <button disabled={loading} onClick={handleBio} className="bg-green-700 text-white w-fit px-6 font-medium hover:bg-opacity-80 text-sm py-2 rounded-[15px]">{loading? 'Adding...': 'Add bio'}</button>
                 <button onClick={() => setIsShow(false)} className="bg-white  text-green-600 border border-green-700 font-medium w-fit px-6 hover:bg-opacity-80 text-sm py-2 rounded-[15px]">Cancel</button>
             </div>
          </div>
