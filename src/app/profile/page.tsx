@@ -42,9 +42,9 @@ const Profile = () => {
             {/* <li className="text-primary hover:font-medium hover:underline cursor-pointer">About</li> */}
           </ul>
 
-          <div className="min-h-[15rem] font-medium rounded-md flex mt-12 text-lg items-center flex-col justify-center bg-gray-100">
+          <div className={`font-medium ${blogs.length === 0 && 'min-h-[20rem]'} rounded-md flex mt-12 text-lg items-center flex-col justify-center bg-gray-100`}>
             {
-              blogs.length === 0 ? (<>{"You haven't added any content yet."} <Link href="/new-story" className='block font-normal text-stone-600 hover:underline cursor-pointer mt-1 text-base'> Start writing ✍️</Link>{"You haven't added any content yet."} <Link href="/new-story" className='block font-normal text-stone-600 hover:underline cursor-pointer mt-1 text-base'> Start writing ✍️</Link></>) : <div className="w-full flex flex-col gap-8 my-6 text-primary font-normal text-[15px] px-5">
+              blogs.length === 0 ? (<>{"You haven't added any content yet."} <Link href="/new-story" className='block font-normal text-stone-600 hover:underline cursor-pointer mt-1 text-base'> Start writing ✍️</Link></>) : <div className="w-full flex flex-col gap-8 my-6 text-primary font-normal text-[15px] px-5">
                 {
                   blogs.map((blog: any) => {
                     // console.log(blog)

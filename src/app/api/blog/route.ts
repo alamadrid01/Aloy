@@ -107,11 +107,13 @@ export async function POST(request: any){
 
 export async function GET(request: any){
     const id = await request.nextUrl.searchParams.get('id')
-    console.log('this is the id', id)
+
     if(Mongoose.Types.ObjectId.isValid(id) === false) return NextResponse.json({message: 'Invalid user id'}, {status: 400})
 
     await connectDB()
     const blog = await BlogSchema.findOne({_id: id})
+    .populate('author')
+    .exec()
 
     if(!blog) return NextResponse.json({message: 'Blog not found'}, {status: 404})
 

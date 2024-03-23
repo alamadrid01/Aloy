@@ -1,4 +1,5 @@
 "use client"
+import PageSkeleton from '@/components/LoadingSkeleton/RegisterSkeleton/page'
 import CommentModals from '@/components/Modals/CommentModals/page'
 import MoreStories from '@/components/MoreStories/page'
 import ShowContent from '@/components/ShowContent/page'
@@ -8,40 +9,55 @@ import React from 'react'
 const Slug = ({params}: {params: {slug: String}}) => {
     const [value, setValue] = React.useState<string>("");
     const [show, setShow] = React.useState<boolean>(false)
+    const [data, setData] = React.useState<any>({})
 
     React.useEffect(() => {
-        setValue(`Many first-time founders struggle with figuring out what tools to use to build their products and manage company operations. Having endless options for CRMs, knowledge bases, and design tools doesn’t make it any easier. If there’s one thing you shouldn’t be doing in the early stages of your company, it’s wasting hours doing due diligence for software.
-        We were in that spot a few years ago when we started CommandBar. Luckily, having access to YC’s network made the chore much easier since founders who’ve gone through the process are always happy to share recommendations (much more concisely and honestly than comparison tables can 😉).
-        Innovate on your product, go with something standard for the products you buy (for the most part, unless you have an extremely custom need in some area).
-        Here’s a list of the software we use (and love), from the first days of CommandBar, up until today. Use this as a guide if you’re wondering whether you should pay for a tool for doing X.`)
+        
+        (async () =>{
+            const slug = params.slug
+            const response = await fetch(`/api/blog/?id=${slug}`)
+
+            console.log(response.status)
+
+            if(response.status === 200){
+                const data = await response.json()
+                setData(data)
+                setValue(data.content)
+                // console.log(data)
+            }
+            
+        })()
     }, [])
+
+    if(!data?.content) return <PageSkeleton />
+
   return (
     <div className='w-full min-h-screen mt-16'>
         <CommentModals show={show}/>
         <section className='max-w-7xl container grid grid-cols-2 gap-20'>
             <div className='col-span-1 flex flex-col  justify-center'>
-                <h1 className='text-3xl font-bold'>6 Legit Apps To Make Truly Passive Income By Having Your Computer Turned On.</h1>
-                <p className="text-primary  mt-2">Discover how to earn passive income by simply leaving your computer running. Here are six methods that can help you monetize your idle computer time.</p>
+                <h1 className='text-3xl font-bold'>{data?.title}</h1>
+                <p className="text-primary  mt-2">{data?.description}</p>
                 <div className="flex mt-10 gap-4">
-                    <Image src="https://picsum.photos/400/400" alt="author" width={50} height={50} className="rounded-full" />
+                    <Image src={data.author.avatar}alt="author" width={50} height={50} className="rounded-full" />
                     <div className="gird grid-cols-2">
-                        <p className="text-sm font-bold">John Doe</p>
+                        <p className="text-sm font-bold">{data.author.firstName + ' ' + data.author.lastName}</p>
                         <h3 className="text-sm text-primary">9 min read</h3>
                     </div>
                     <div className="gird grid-cols-2">
                         <h3 className="text-sm cursor-pointer text-green-600">Follow</h3>
-                        <p className="text-sm text-primary">Jan 20, 2024</p>
+                        <p className="text-sm text-primary">{new Date(data.createdAt).toDateString()}</p>
                     </div>
                 </div>
                 <div className="flex mt-10 items-center justify-between gap-4">
                     <div className="flex gap-5">
                         <h2 className="text-primary text-sm items-end flex">
                         <svg className='cursor-pointer' width="24" height="24" viewBox="0 0 24 24" aria-label="clap"><path fill-rule="evenodd" fill= "grey" clip-rule="evenodd" d="M11.37.83L12 3.28l.63-2.45h-1.26zM15.42 1.84l-1.18-.39-.34 2.5 1.52-2.1zM9.76 1.45l-1.19.4 1.53 2.1-.34-2.5zM20.25 11.84l-2.5-4.4a1.42 1.42 0 0 0-.93-.64.96.96 0 0 0-.75.18c-.25.19-.4.42-.45.7l.05.05 2.35 4.13c1.62 2.95 1.1 5.78-1.52 8.4l-.46.41c1-.13 1.93-.6 2.78-1.45 2.7-2.7 2.51-5.59 1.43-7.38zM12.07 9.01c-.13-.69.08-1.3.57-1.77l-2.06-2.07a1.12 1.12 0 0 0-1.56 0c-.15.15-.22.34-.27.53L12.07 9z"></path><path fill-rule="evenodd" fill= "grey"  clip-rule="evenodd" d="M14.74 8.3a1.13 1.13 0 0 0-.73-.5.67.67 0 0 0-.53.13c-.15.12-.59.46-.2 1.3l1.18 2.5a.45.45 0 0 1-.23.76.44.44 0 0 1-.48-.25L7.6 6.11a.82.82 0 1 0-1.15 1.15l3.64 3.64a.45.45 0 1 1-.63.63L5.83 7.9 4.8 6.86a.82.82 0 0 0-1.33.9c.04.1.1.18.18.26l1.02 1.03 3.65 3.64a.44.44 0 0 1-.15.73.44.44 0 0 1-.48-.1L4.05 9.68a.82.82 0 0 0-1.4.57.81.81 0 0 0 .24.58l1.53 1.54 2.3 2.28a.45.45 0 0 1-.64.63L3.8 13a.81.81 0 0 0-1.39.57c0 .22.09.43.24.58l4.4 4.4c2.8 2.8 5.5 4.12 8.68.94 2.27-2.28 2.71-4.6 1.34-7.1l-2.32-4.08z"></path></svg>
-                            5,000
+                        {data?.upvote.length}
                         </h2>
                         <h2 onClick={() => setShow(!show)} className="text-primary cursor-pointer gap-0.5 text-sm items-end flex">
                         <svg width="24" fill='grey' height="24" viewBox="0 0 24 24"><path d="M18 16.8a7.14 7.14 0 0 0 2.24-5.32c0-4.12-3.53-7.48-8.05-7.48C7.67 4 4 7.36 4 11.48c0 4.13 3.67 7.48 8.2 7.48a8.9 8.9 0 0 0 2.38-.32c.23.2.48.39.75.56 1.06.69 2.2 1.04 3.4 1.04.22 0 .4-.11.48-.29a.5.5 0 0 0-.04-.52 6.4 6.4 0 0 1-1.16-2.65v.02zm-3.12 1.06l-.06-.22-.32.1a8 8 0 0 1-2.3.33c-4.03 0-7.3-2.96-7.3-6.59S8.17 4.9 12.2 4.9c4 0 7.1 2.96 7.1 6.6 0 1.8-.6 3.47-2.02 4.72l-.2.16v.26l.02.3a6.74 6.74 0 0 0 .88 2.4 5.27 5.27 0 0 1-2.17-.86c-.28-.17-.72-.38-.94-.59l.01-.02z"></path></svg>
-                            90
+                        {data?.comment.length}
                         </h2>
                     </div>
                     <div className="flex gap-5">
@@ -54,7 +70,7 @@ const Slug = ({params}: {params: {slug: String}}) => {
             </div>
 
             <div className='col-span-1'>
-                <Image src="https://picsum.photos/600/400" alt="author" width={600} height={400} className="rounded-lg" />
+                <Image src={data.image} alt="author" width={600} height={400} className="h-[300px] rounded-lg" />
             </div>
         </section>
 
@@ -66,11 +82,11 @@ const Slug = ({params}: {params: {slug: String}}) => {
                     <div className="flex gap-5">
                         <h2 className="text-primary text-sm items-end flex">
                         <svg className='cursor-pointer' width="24" height="24" viewBox="0 0 24 24" aria-label="clap"><path fill-rule="evenodd" fill= "grey" clip-rule="evenodd" d="M11.37.83L12 3.28l.63-2.45h-1.26zM15.42 1.84l-1.18-.39-.34 2.5 1.52-2.1zM9.76 1.45l-1.19.4 1.53 2.1-.34-2.5zM20.25 11.84l-2.5-4.4a1.42 1.42 0 0 0-.93-.64.96.96 0 0 0-.75.18c-.25.19-.4.42-.45.7l.05.05 2.35 4.13c1.62 2.95 1.1 5.78-1.52 8.4l-.46.41c1-.13 1.93-.6 2.78-1.45 2.7-2.7 2.51-5.59 1.43-7.38zM12.07 9.01c-.13-.69.08-1.3.57-1.77l-2.06-2.07a1.12 1.12 0 0 0-1.56 0c-.15.15-.22.34-.27.53L12.07 9z"></path><path fill-rule="evenodd" fill= "grey"  clip-rule="evenodd" d="M14.74 8.3a1.13 1.13 0 0 0-.73-.5.67.67 0 0 0-.53.13c-.15.12-.59.46-.2 1.3l1.18 2.5a.45.45 0 0 1-.23.76.44.44 0 0 1-.48-.25L7.6 6.11a.82.82 0 1 0-1.15 1.15l3.64 3.64a.45.45 0 1 1-.63.63L5.83 7.9 4.8 6.86a.82.82 0 0 0-1.33.9c.04.1.1.18.18.26l1.02 1.03 3.65 3.64a.44.44 0 0 1-.15.73.44.44 0 0 1-.48-.1L4.05 9.68a.82.82 0 0 0-1.4.57.81.81 0 0 0 .24.58l1.53 1.54 2.3 2.28a.45.45 0 0 1-.64.63L3.8 13a.81.81 0 0 0-1.39.57c0 .22.09.43.24.58l4.4 4.4c2.8 2.8 5.5 4.12 8.68.94 2.27-2.28 2.71-4.6 1.34-7.1l-2.32-4.08z"></path></svg>
-                            5,000
+                        {data?.upvote.length}
                         </h2>
                         <h2 className="text-primary gap-0.5 text-sm items-end flex">
                         <svg onClick={() => setShow(!show)} width="24" fill='grey' height="24" viewBox="0 0 24 24"><path d="M18 16.8a7.14 7.14 0 0 0 2.24-5.32c0-4.12-3.53-7.48-8.05-7.48C7.67 4 4 7.36 4 11.48c0 4.13 3.67 7.48 8.2 7.48a8.9 8.9 0 0 0 2.38-.32c.23.2.48.39.75.56 1.06.69 2.2 1.04 3.4 1.04.22 0 .4-.11.48-.29a.5.5 0 0 0-.04-.52 6.4 6.4 0 0 1-1.16-2.65v.02zm-3.12 1.06l-.06-.22-.32.1a8 8 0 0 1-2.3.33c-4.03 0-7.3-2.96-7.3-6.59S8.17 4.9 12.2 4.9c4 0 7.1 2.96 7.1 6.6 0 1.8-.6 3.47-2.02 4.72l-.2.16v.26l.02.3a6.74 6.74 0 0 0 .88 2.4 5.27 5.27 0 0 1-2.17-.86c-.28-.17-.72-.38-.94-.59l.01-.02z"></path></svg>
-                            90
+                        {data?.comment.length}
                         </h2>
                     </div>
                     <div className="flex gap-5">
