@@ -5,7 +5,7 @@ import React, { use, useContext, useEffect, useRef, useState } from 'react'
 
 const ProfileModal = ({show}: {show:boolean}) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
-    const {user, username} = useContext(UserContext);
+    const {user, bio, username} = useContext(UserContext);
 
     const [isShow, setIsShow] = useState(show);
     const [changeableUsername, setChangeableUsername] = useState('');

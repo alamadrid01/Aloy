@@ -1,9 +1,9 @@
 "use client"
+import FetchDataHOC from '@/components/FetchDataHOC/page'
 import PageSkeleton from '@/components/LoadingSkeleton/RegisterSkeleton/page'
 import BioModal from '@/components/Modals/BioModal/page'
 import ProfileModal from '@/components/Modals/ProfileModal/page'
 import { UserContext } from '@/context/context'
-import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect } from 'react'
@@ -13,21 +13,20 @@ const Profile = () => {
   const [show, setShow] = React.useState(false);
   const [bioShow, setBioShow] = React.useState<boolean>(false);
   const [username, setUsernames] = React.useState('')
+  const [isLoading, setIsLoading] = React.useState(true)
 
-  const {user, setUsername} = React.useContext(UserContext);
+  const {user, setUsername, setBio, bio} = React.useContext(UserContext);
 
   useEffect(() =>{
     if(!user) return;
     const splitName = user.name.split(" ").join("").toLowerCase();
     setUsernames(splitName); 
     setUsername(splitName);
+    setIsLoading(false);
   }, [user])
 
-  const {data: session, status} =  useSession();
 
-  if(status == "unauthenticated"){
-    window.location.assign("/login")
-  }
+
 
   if (!user) {
     return <PageSkeleton />
@@ -50,9 +49,11 @@ const Profile = () => {
           </div>
 
           <h2 className="text-sm text-primary uppercase font-medium mt-16">About</h2>
-          <div className="min-h-[5rem] font-normal rounded-md flex mt-6 text-base items-center flex-row-reverse justify-center bg-gray-100">
-            {" to help people get a better idea of you, your skills, history and talents."} <span onClick={() => setBioShow(!bioShow)} className='block mr-2 text-stone-600 underline cursor-pointer font-medium text-base'> Add a bio </span>
-          </div>
+         {
+          isLoading ? <PageSkeleton /> : bio === ''?  <div className="min-h-[5rem] font-normal rounded-md flex mt-6 text-base items-center flex-row-reverse justify-center bg-gray-100">
+          {" to help people get a better idea of you, your skills, history and talents."} <span onClick={() => setBioShow(!bioShow)} className='block mr-2 text-stone-600 underline cursor-pointer font-medium text-base'> Add a bio </span>
+          </div> : <p onClick={()=> setBioShow(!bioShow)} className="text-[15px] leading-8 mt-2 text-green-600">{bio}</p>
+         }
 
 
 
@@ -73,4 +74,4 @@ const Profile = () => {
   )
 }
 
-export default Profile
+export default FetchDataHOC(Profile)

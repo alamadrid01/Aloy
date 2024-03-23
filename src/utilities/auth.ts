@@ -35,6 +35,7 @@ export const authOptions = {
           lastName: profile.family_name,
           email: profile.email,
           avatar: profile.picture,
+          bio: ""
         };
 
         const createUserResponse = await fetch("http://localhost:3000/api/register", {

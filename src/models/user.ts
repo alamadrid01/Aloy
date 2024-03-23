@@ -118,7 +118,7 @@ const userProfileSchema = new mongoose.Schema({
     },
     bio: {
         type: String,
-        required: true
+        default: ''
     },
     following: [{
         type: mongoose.Schema.Types.ObjectId,
