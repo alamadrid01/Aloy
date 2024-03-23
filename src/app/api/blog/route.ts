@@ -91,7 +91,7 @@ export async function POST(request: any){
             image: imageUrl,
             slug,
             tags: tags.split(','),
-            author: id
+            author: id,
         })
 
         const user = await UserProfile.findByIdAndUpdate(id, {$push: {blogs: blog._id}}, {new: true}).exec();

@@ -15,7 +15,7 @@ const Profile = () => {
   const [username, setUsernames] = React.useState('')
   const [isLoading, setIsLoading] = React.useState(true)
 
-  const {user, setUsername, setBio, bio} = React.useContext(UserContext);
+  const {user, setUsername, followers, following, blogs, setBio, bio} = React.useContext(UserContext);
 
   useEffect(() =>{
     if(!user) return;
@@ -24,8 +24,6 @@ const Profile = () => {
     setUsername(splitName);
     setIsLoading(false);
   }, [user])
-
-
 
 
   if (!user) {
@@ -45,7 +43,23 @@ const Profile = () => {
           </ul>
 
           <div className="min-h-[15rem] font-medium rounded-md flex mt-12 text-lg items-center flex-col justify-center bg-gray-100">
-            {"You haven't added any content yet."} <Link href="/new-story" className='block font-normal text-stone-600 hover:underline cursor-pointer mt-1 text-base'> Start writing ✍️</Link>
+            {
+              blogs.length === 0 ? (<>{"You haven't added any content yet."} <Link href="/new-story" className='block font-normal text-stone-600 hover:underline cursor-pointer mt-1 text-base'> Start writing ✍️</Link>{"You haven't added any content yet."} <Link href="/new-story" className='block font-normal text-stone-600 hover:underline cursor-pointer mt-1 text-base'> Start writing ✍️</Link></>) : <div className="w-full flex flex-col gap-8 my-6 text-primary font-normal text-[15px] px-5">
+                {
+                  blogs.map((blog: any) => {
+                    // console.log(blog)
+                    return <div key={blog._id} className="flex items-center justify-between">
+                      <Link href={`/blog/${blog._id}`} className="hover:underline text-black cursor-pointer">{blog.title}</Link>
+                      <div className="flex items-center gap-5">
+                      {/* <span className="text-primary font-normal text-xs">{new Date(blog.createdAt).toDateString()}</span> */}
+                      <button className="border py-1 px-4 border-green-600 text-green-600 rounded-md  font-medium text-sm hover:bg-green-600 hover:text-white ">Edit</button>
+                      <button className="border py-1 px-3 border-red-600 text-white bg-red-700 rounded-md font-medium text-sm">Delete</button>
+                      </div>
+                      </div>
+                  })
+                }
+              </div>
+            }
           </div>
 
           <h2 className="text-sm text-primary uppercase font-medium mt-16">About</h2>
@@ -62,8 +76,8 @@ const Profile = () => {
             <Image src={user.image} width={70} height={70} alt="human" className="rounded-full" />
           <h2 className="font-semibold mt-3 text-base">@{username}</h2>
           <div className="flex gap-5 mt-1.5 text-primary items-center">
-              <div className="flex cursor-pointer hover:underline gap-1"> 0 <span>followers</span></div>
-              <div className="flex cursor-pointer hover:underline gap-1"> 0 <span>following</span></div>
+              <div className="flex cursor-pointer hover:underline gap-1">{followers.length} <span>followers</span></div>
+              <div className="flex cursor-pointer hover:underline gap-1"> {following.length}  <span>following</span></div>
           </div>
 
           <h3 onClick={()=> setShow(!show)} className="text-sm mt-6 cursor-pointer hover:underline text-green-600">Edit profile</h3>

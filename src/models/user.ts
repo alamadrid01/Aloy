@@ -2,167 +2,197 @@ import mongoose from "mongoose";
 
 const blogSchema = new mongoose.Schema({
   title: {
-      type: String,
-      required: true
+    type: String,
+    required: true,
   },
   description: {
-      type: String,
-      required: true
+    type: String,
+    required: true,
   },
   image: {
-      type: String,
-      required: true
+    type: String,
+    required: true,
   },
   content: {
-      type: String,
-      required: true
+    type: String,
+    required: true,
   },
   slug: {
-        type: String,
-        required: true,
-        unique: true
+    type: String,
+    required: true,
+    unique: true,
   },
-  author: {
+  comment: [
+    {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'UserProfile',
-      required: true
+      ref: "Comments",
+    },
+  ],
+  upvote: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Upvote",
+    },
+  ],
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "UserProfile",
+    required: true,
   },
   tags: [String],
   createdAt: {
-      type: Date,
-      default: Date.now
-  }
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const commentSchema = new mongoose.Schema({
   content: {
-      type: String,
-      required: true
+    type: String,
+    required: true,
   },
   author: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'UserProfile',
-      required: true
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "UserProfile",
+    required: true,
   },
   blog: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Blog',
-      required: true
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Blog",
+    required: true,
   },
   createdAt: {
-      type: Date,
-      default: Date.now
-  }
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const replySchema = new mongoose.Schema({
   content: {
-      type: String,
-      required: true
+    type: String,
+    required: true,
   },
   author: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'UserProfile',
-      required: true
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "UserProfile",
+    required: true,
   },
   comment: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Comments',
-      required: true
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Comments",
+    required: true,
   },
   createdAt: {
-      type: Date,
-      default: Date.now
-  }
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const upvoteSchema = new mongoose.Schema({
   blog: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Blog',
-      required: true
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Blog",
+    required: true,
   },
   user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'UserProfile',
-      required: true
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "UserProfile",
+    required: true,
   },
   vote: {
-      type: Number,
-      required: true,
-      default: 1
+    type: Number,
+    required: true,
+    default: 1,
   },
   createdAt: {
-      type: Date,
-      default: Date.now
-  }
+    type: Date,
+    default: Date.now,
+  },
 });
 
-const userProfileSchema = new mongoose.Schema({
+const userProfileSchema = new mongoose.Schema(
+  {
     firstName: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     lastName: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     username: {
-        type: String,
-        required: true,
-        unique: true
+      type: String,
+      required: true,
+      unique: true,
     },
     email: {
-        type:String,
-        required: true,
-        unique: true
+      type: String,
+      required: true,
+      unique: true,
     },
     avatar: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     bio: {
-        type: String,
-        default: ''
+      type: String,
+      default: "",
     },
-    following: [{
+    following: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'UserProfile'
-    }],
-    followers: [{
+        ref: "UserProfile",
+      },
+    ],
+    followers: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'UserProfile'
-    }],
-    blogs: [{
+        ref: "UserProfile",
+      },
+    ],
+    blogs: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Blog'
-    }],
-    comments: [{
+        ref: "Blog",
+      },
+    ],
+    comments: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Comments'
-    }],
-    replies: [{
+        ref: "Comments",
+      },
+    ],
+    replies: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Reply'
-    }],
-    upvotes: [{
+        ref: "Reply",
+      },
+    ],
+    upvotes: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Upvote'
-    }],
+        ref: "Upvote",
+      },
+    ],
     tags: [String],
     createdAt: {
-        type: Date,
-        default: Date.now
+      type: Date,
+      default: Date.now,
     },
     userImage: {
-        type: String
-    }
-}, { timestamps: true });
+      type: String,
+    },
+  },
+  { timestamps: true }
+);
 
 const Blog = mongoose.models.Blog || mongoose.model("Blog", blogSchema);
-const Comments = mongoose.models.Comments || mongoose.model("Comments", commentSchema);
+const Comments =
+  mongoose.models.Comments || mongoose.model("Comments", commentSchema);
 const Reply = mongoose.models.Reply || mongoose.model("Reply", replySchema);
 const Upvote = mongoose.models.Upvote || mongoose.model("Upvote", upvoteSchema);
-const UserProfile = mongoose.models.UserProfile || mongoose.model("UserProfile", userProfileSchema);
+const UserProfile =
+  mongoose.models.UserProfile ||
+  mongoose.model("UserProfile", userProfileSchema);
 
-module.exports = { Blog, Comments, Reply, Upvote, UserProfile }
+module.exports = { Blog, Comments, Reply, Upvote, UserProfile };

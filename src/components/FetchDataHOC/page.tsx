@@ -15,7 +15,7 @@ const FetchDataHOC = (WrappedComponent: any) => {
         const [userId, setUserNewId] = useState<string | null>(null);
         // const [user, setUser] = useState<any>(null);
 
-        const { user, setFirstName, setLastName, setUserId, setBio, setFollowers, setFollowing } = useContext(UserContext);
+        const { user, setFirstName, setBlogs, setLastName, setUserId, setBio, setFollowers, setFollowing } = useContext(UserContext);
         const { push } = useRouter();
 
         const {data: session, status} =  useSession();
@@ -30,17 +30,19 @@ const FetchDataHOC = (WrappedComponent: any) => {
             (async () => {
                 const response = await fetch(`/api/register?email=${user.email}`);
                 const data = await response.json();
+                // console.log(data)
 
                 if(response.status === 200){
                     setDataFetched(true);
                     setLoading(false);
-                    setFirstName(data[0].firstName);
-                    setLastName(data[0].lastName);
-                    setBio(data[0].bio);
-                    setFollowers(data[0].followers);
-                    setFollowing(data[0].following);
-                    setUserId(data[0]._id);
-                    setUserNewId(data[0]._id);
+                    setFirstName(data.firstName);
+                    setLastName(data.lastName);
+                    setBio(data.bio);
+                    setFollowers(data.followers);
+                    setFollowing(data.following);
+                    setUserId(data._id);
+                    setUserNewId(data._id);
+                    setBlogs(data.blogs);
                 } else {
                     setError(true);
                 }

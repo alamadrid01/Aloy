@@ -27,7 +27,12 @@ export async function GET(request: any){
    try{
     await connectDB();
 
-    const users = await UserProfile.find({email: userEmail});
+    const users = await UserProfile.findOne({email: userEmail})
+    .populate('followers')
+    .populate('following')
+    .populate('blogs')
+    .populate('upvotes')
+    .exec();
 
     if (!users || users.length == 0) return NextResponse.json({ message: 'User not found' }, { status: 404 });
 
