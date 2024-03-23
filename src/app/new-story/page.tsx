@@ -20,7 +20,7 @@ const NewStory = (props: any) => {
 
   return (
     <section className='container max-w-6xl mt-16'>
-       {isLoading ? <PageSkeleton />: <CreateBlog titles="" descriptions='' contents='' />}
+       {isLoading ? <PageSkeleton />: <CreateBlog blogId='' titles="" descriptions='' contents='' />}
     </section>
   )
 }

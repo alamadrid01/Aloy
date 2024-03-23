@@ -152,4 +152,25 @@ export async function PUT(request: any){
         }catch(err){
             return NextResponse.json({message: 'An error occurred'}, {status: 500})
         }
-        }
+}
+
+export async function DELETE(request: any){
+    const id = await request.nextUrl.searchParams.get('id')
+
+    if(Mongoose.Types.ObjectId.isValid(id) === false) return NextResponse.json({message: 'Invalid blog id'}, {status: 400})
+
+    await connectDB()
+
+    try{
+        const blog = await BlogSchema.findByIdAndDelete(id)
+
+        if(!blog) return NextResponse.json({message: 'Blog not found'}, {status: 404})
+
+        console.log(blog)
+
+        return NextResponse.json({message: 'Blog deleted'}, {status: 200})
+    }catch(err){
+        return NextResponse.json({message: 'An error occurred'}, {status: 500})
+
+    }
+}

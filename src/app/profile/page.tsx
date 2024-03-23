@@ -2,6 +2,7 @@
 import FetchDataHOC from '@/components/FetchDataHOC/page'
 import PageSkeleton from '@/components/LoadingSkeleton/RegisterSkeleton/page'
 import BioModal from '@/components/Modals/BioModal/page'
+import DeleteBlogModal from '@/components/Modals/DeleteBlogModal/page'
 import ProfileModal from '@/components/Modals/ProfileModal/page'
 import { UserContext } from '@/context/context'
 import Image from 'next/image'
@@ -15,7 +16,8 @@ const Profile = () => {
   const [username, setUsernames] = React.useState('')
   const [isLoading, setIsLoading] = React.useState(true)
 
-  const {user, setUsername, followers, following, blogs, setBio, bio} = React.useContext(UserContext);
+
+  const {user, setUsername, followers, setShowDelete, showDelete, following, blogs, setBlogId, blogId, bio} = React.useContext(UserContext);
 
   useEffect(() =>{
     if(!user) return;
@@ -53,13 +55,19 @@ const Profile = () => {
                       <div className="flex items-center gap-5">
                       {/* <span className="text-primary font-normal text-xs">{new Date(blog.createdAt).toDateString()}</span> */}
                       <button onClick={() => window.location.href= `/edit-story/${blog._id}`} className="border py-1 px-4 border-green-600 text-green-600 rounded-md  font-medium text-sm hover:bg-green-600 hover:text-white ">Edit</button>
-                      <button className="border py-1 px-3 border-red-600 text-white bg-red-700 rounded-md font-medium text-sm">Delete</button>
+                      <button onClick={() => {
+                        setShowDelete(true);
+                        setBlogId(blog._id);
+                      }} className="border py-1 px-3 border-red-600 text-white bg-red-700 rounded-md font-medium text-sm">Delete</button>
                       </div>
                       </div>
                   })
                 }
               </div>
             }
+               {
+                  showDelete && <DeleteBlogModal show={showDelete} blogId={blogId} />
+                }
           </div>
 
           <h2 className="text-sm text-primary uppercase font-medium mt-16">About</h2>
