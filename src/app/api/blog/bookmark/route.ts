@@ -16,7 +16,7 @@ export async function PUT(request: any){
     await connectDB()
 
     try{
-        const blog = await UserProfile.findByIdAndUpdate(id, {$push: {bookmarks: blog_id}}, {new: true})
+        const blog = await UserProfile.findByIdAndUpdate(id, {$push: {bookmarks: blog_id}}, {new: true}).populate('bookmarks').exec()
         if(!blog) return NextResponse.json({message: 'Blog not found'}, {status: 404})
         return NextResponse.json(blog, {status: 200})
     }catch(err){
@@ -36,10 +36,11 @@ export async function DELETE(request: any){
     await connectDB()
 
     try{
-        const blog = await UserProfile.findByIdAndUpdate(id, {$pull: {bookmarks: blog_id}}, {new: true})
+        const blog = await UserProfile.findByIdAndUpdate(id, {$pull: {bookmarks: blog_id}}, {new: true}).populate('bookmarks').exec()
         if(!blog) return NextResponse.json({message: 'Blog not found'}, {status: 404})
         return NextResponse.json(blog, {status: 200})
     }catch(err){
         return NextResponse.json({message: err}, {status: 500})
     }
 }
+

@@ -25,7 +25,8 @@ export const UserProvider: any = ({ children }: any) => {
   const [showBioModal, setShowBioModal] = useState(false);
   const [bookmarks, setBookmarks] = useState([]);
 
-  console.log('this is the context api first')
+  // console.log('this is the user', fistName)
+  // console.log('this is the username', lastName)
 
 
   const pass_value = {

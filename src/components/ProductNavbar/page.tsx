@@ -12,13 +12,14 @@ const ProductNavbar = ({text = 'stories'}: {text:string}) => {
   const [isProfile, setIsProfile] = React.useState(true);
   const [avatar, setAvatar] = React.useState<string>("" as string);
 
-  const {setUser} = React.useContext(UserContext);
+  const {setUser, bookmarks, setEmail} = React.useContext(UserContext);
 
   const { data: session, status } = useSession()
 
   React.useEffect(() => {
     if(session && session.user){
       setUser(session.user)
+      setEmail(session.user.email as string)
       setAvatar(session.user.image as string)
     }
     
@@ -51,6 +52,12 @@ const ProductNavbar = ({text = 'stories'}: {text:string}) => {
     }
     
   }, [pathname])
+
+
+  const handleClick = (id: string) => {
+    window.location.href= ('/stories/'+id)
+    setShowNotification(false)
+  }
   
 
   return (
@@ -127,9 +134,22 @@ const ProductNavbar = ({text = 'stories'}: {text:string}) => {
            }
             {
             showNotification && (
-              <div className="fixed top-[50px] right-20 py-5 px-6 rounded-lg bg-white text-black w-[22rem] md:min-h-[90vh] shadow-lg ">
+              <div className="fixed top-[50px] z-50 right-20 py-5 px-6 rounded-lg bg-white text-black w-[22rem] md:min-h-[90vh] shadow-lg ">
                 <h2 className="font-semibold text-2xl">Bookmarks</h2>
-                <p className="text-gray-600 mt-10 font-semibold text-sm">No new bookmarks.</p>
+                {/* <p className="text-gray-600 mt-10 font-semibold text-sm">No new bookmarks.</p> */}
+                <div className="flex flex-col mt-10 gap-12">
+                  {
+                    bookmarks.length > 0 ? bookmarks.map((bookmark: any, index: any) => (
+                      <div onClick={() => handleClick(bookmark._id)} key={index} className="flex cursor-pointer border-l-2 pl-5 border-green-600 gap-5 items-center">
+                        {/* <Image src={bookmark.image} width={30} height={30} alt="bookmark image" className="rounded-full" /> */}
+                        <div>
+                          <p className="font-semibold text-sm">{bookmark.title}</p>
+                          <p className="text-primary mt-2 text-xs">{bookmark.description}</p>
+                        </div>
+                      </div>
+                    )) : <p className="text-gray-600 mt-10 font-semibold text-sm">No new bookmarks.</p>
+                  }
+                </div>
                 </div>
             )
            }

@@ -1,4 +1,5 @@
 "use client"
+import FetchDataHOC from '@/components/FetchDataHOC/page'
 import PageSkeleton from '@/components/LoadingSkeleton/RegisterSkeleton/page'
 import CommentModals from '@/components/Modals/CommentModals/page'
 import MoreStories from '@/components/MoreStories/page'
@@ -16,7 +17,7 @@ const Slug = ({params}: {params: {slug: String}}) => {
     const  [isBookmarked, setIsBookmarked] = React.useState<boolean>(false)
     const [isBookmarkLoading, setIsBookmarkLoading] = React.useState<boolean>(false)
 
-    const {bookmarks, setBookmarks} = useContext(UserContext);
+    const {bookmarks, setBookmarks, email, lastName} = useContext(UserContext);
 
     React.useEffect(() => {
         (async () =>{
@@ -30,9 +31,6 @@ const Slug = ({params}: {params: {slug: String}}) => {
                 setData(data)
                 setValue(data.content)
                 setClapCount(data.upvote)
-                if(bookmarks?.length > 0){
-                    setIsBookmarked(true)
-                }
                 // console.log(data)
             }
             
@@ -80,6 +78,9 @@ const Slug = ({params}: {params: {slug: String}}) => {
             })
             setIsBookmarkLoading(false)
             console.log(response.status)
+
+            const data = await response.json()
+            setBookmarks(data.bookmarks)
         }else{
             const response = await fetch(`/api/blog/bookmark/?blogId=${params.slug}&id=${datas.author._id}`, {
                 method: 'PUT',
@@ -87,10 +88,39 @@ const Slug = ({params}: {params: {slug: String}}) => {
             })
             setIsBookmarkLoading(false)
             console.log(response.status)
+
+            const data = await response.json()
+            setBookmarks(data.bookmarks)
         }
     }
 
-    console.log(bookmarks)
+    React.useEffect(() => {
+        if(!email) return;
+        if(!lastName){
+            (async () =>{
+            const res = await fetch('/api/register/?email=' + email)
+            console.log(res.status)
+
+            const data = await res.json()
+            setBookmarks(data.bookmarks)
+            const isBookmarked = data.bookmarks.filter((book:any) => params.slug === book._id)
+            if(isBookmarked.length > 0){
+                setIsBookmarked(true)
+            }else{
+                setIsBookmarked(false)
+            }
+           })()
+        }else{
+            const isBookmarked = bookmarks.filter((book:any) => params.slug === book._id)
+            console.log('is bookmarked', isBookmarked)
+            if(isBookmarked.length > 0){
+                setIsBookmarked(true)
+            }else{
+                setIsBookmarked(false)
+            }
+        }
+    }, [email]);
+
 
     if(!datas?.content) return <PageSkeleton />
 
@@ -126,7 +156,7 @@ const Slug = ({params}: {params: {slug: String}}) => {
                     <div className="flex relative gap-5">
                         {
                         isBookmarked ?
-                    <svg onClick={handleBookmark} xmlns="http://www.w3.org/2000/svg" width="24" height="24"  viewBox="0 0 24 24" id="bookmark"><path fill="grey" d="M16,2H8C6.3,2,5,3.3,5,5v16c0,0.2,0,0.3,0.1,0.5C5.4,22,6,22.1,6.5,21.9l5.5-3.2l5.5,3.2C17.7,22,17.8,22,18,22c0.6,0,1-0.4,1-1V5C19,3.3,17.7,2,16,2z"></path></svg>:
+                    <svg onClick={handleBookmark} className="cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="24" height="24"  viewBox="0 0 24 24" id="bookmark"><path fill="grey" d="M16,2H8C6.3,2,5,3.3,5,5v16c0,0.2,0,0.3,0.1,0.5C5.4,22,6,22.1,6.5,21.9l5.5-3.2l5.5,3.2C17.7,22,17.8,22,18,22c0.6,0,1-0.4,1-1V5C19,3.3,17.7,2,16,2z"></path></svg>:
                     <svg onClick={handleBookmark} width="24" height="24" className="cursor-pointer" viewBox="0 0 24 24" fill="grey"><path d="M17.5 1.25a.5.5 0 0 1 1 0v2.5H21a.5.5 0 0 1 0 1h-2.5v2.5a.5.5 0 0 1-1 0v-2.5H15a.5.5 0 0 1 0-1h2.5v-2.5zm-11 4.5a1 1 0 0 1 1-1H11a.5.5 0 0 0 0-1H7.5a2 2 0 0 0-2 2v14a.5.5 0 0 0 .8.4l5.7-4.4 5.7 4.4a.5.5 0 0 0 .8-.4v-8.5a.5.5 0 0 0-1 0v7.48l-5.2-4a.5.5 0 0 0-.6 0l-5.2 4V5.75z" fill="grey"></path></svg>
                         }
                         {
