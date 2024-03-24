@@ -28,12 +28,10 @@ const blogSchema = new mongoose.Schema({
       ref: "Comments",
     },
   ],
-  upvote: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Upvote",
-    },
-  ],
+  upvote:{
+      type: Number,
+      default: 0,
+  },
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "UserProfile",
@@ -88,27 +86,6 @@ const replySchema = new mongoose.Schema({
   },
 });
 
-const upvoteSchema = new mongoose.Schema({
-  blog: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Blog",
-    required: true,
-  },
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "UserProfile",
-    required: true,
-  },
-  vote: {
-    type: Number,
-    required: true,
-    default: 1,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
 
 const userProfileSchema = new mongoose.Schema(
   {
@@ -168,12 +145,6 @@ const userProfileSchema = new mongoose.Schema(
         ref: "Reply",
       },
     ],
-    upvotes: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Upvote",
-      },
-    ],
     tags: [String],
     createdAt: {
       type: Date,
@@ -187,12 +158,8 @@ const userProfileSchema = new mongoose.Schema(
 );
 
 const Blog = mongoose.models.Blog || mongoose.model("Blog", blogSchema);
-const Comments =
-  mongoose.models.Comments || mongoose.model("Comments", commentSchema);
+const Comments = mongoose.models.Comments || mongoose.model("Comments", commentSchema);
 const Reply = mongoose.models.Reply || mongoose.model("Reply", replySchema);
-const Upvote = mongoose.models.Upvote || mongoose.model("Upvote", upvoteSchema);
-const UserProfile =
-  mongoose.models.UserProfile ||
-  mongoose.model("UserProfile", userProfileSchema);
+const UserProfile = mongoose.models.UserProfile || mongoose.model("UserProfile", userProfileSchema);
 
-module.exports = { Blog, Comments, Reply, Upvote, UserProfile };
+module.exports = { Blog, Comments, Reply, UserProfile };

@@ -77,3 +77,7 @@ blockquote{
 .un {
   transform: translateX(-414px);
 }
+
+.no-select {
+  user-select: none;
+}
