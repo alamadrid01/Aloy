@@ -31,7 +31,7 @@ export async function GET(request: any){
     .populate('followers')
     .populate('following')
     .populate('blogs')
-    .populate('upvotes')
+    .populate('bookmarks')
     .exec();
 
     if (!users || users.length == 0) return NextResponse.json({ message: 'User not found' }, { status: 404 });

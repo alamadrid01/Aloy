@@ -158,15 +158,19 @@ export async function PUT(request: any){
 
 export async function DELETE(request: any){
     const id = await request.nextUrl.searchParams.get('id')
+    const userId = await request.nextUrl.searchParams.get('userId')
 
-    if(Mongoose.Types.ObjectId.isValid(id) === false) return NextResponse.json({message: 'Invalid blog id'}, {status: 400})
+    if(!id || !userId) return NextResponse.json({message: 'Id required'}, {status: 400})
+
+    if(Mongoose.Types.ObjectId.isValid(id) === false || Mongoose.Types.ObjectId.isValid(userId) === false) return NextResponse.json({message: 'Invalid id'}, {status: 400})
 
     await connectDB()
 
     try{
         const blog = await BlogSchema.findByIdAndDelete(id)
+        const user = await UserProfile.findByIdAndUpdate(userId, {$pull: {blogs: id}}, {new: true}).exec()
 
-        if(!blog) return NextResponse.json({message: 'Blog not found'}, {status: 404})
+        if(!blog || !user) return NextResponse.json({message: 'Blog not found'}, {status: 404})
 
         console.log(blog)
 

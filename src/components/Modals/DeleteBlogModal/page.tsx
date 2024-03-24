@@ -4,13 +4,12 @@ import React, { useContext, useEffect, useState } from 'react'
 
 const DeleteBlogModal = ({show, blogId}: {show: boolean, blogId: string}) => {
 
-    const {setShowDelete, showDelete} = useContext(UserContext);
-
+    const {setShowDelete,userId, showDelete} = useContext(UserContext);
     const [loading, setLoading] = useState(false)
 
     const handleDelete = async () => {
         setLoading(true)
-       const res = await fetch(`/api/blog/?id=${blogId}`, {
+       const res = await fetch(`/api/blog/?id=${blogId}&userId=${userId}`, {
             method: 'DELETE'
         });
         setLoading(false)

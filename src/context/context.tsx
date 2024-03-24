@@ -23,6 +23,9 @@ export const UserProvider: any = ({ children }: any) => {
   const [showDelete, setShowDelete] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [showBioModal, setShowBioModal] = useState(false);
+  const [bookmarks, setBookmarks] = useState([]);
+
+  console.log('this is the context api first')
 
 
   const pass_value = {
@@ -53,7 +56,9 @@ export const UserProvider: any = ({ children }: any) => {
     showProfile,
     setShowProfile,
     showBioModal,
-    setShowBioModal
+    setShowBioModal,
+    bookmarks,
+    setBookmarks
   };
 
   return (
