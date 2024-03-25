@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react'
 
 const SearchModal = (props: any) => {
@@ -15,10 +16,10 @@ const SearchModal = (props: any) => {
                 {
                     searchResultsPeople.map((result: any, index: number) => {
                         return (
-                            <div key={index} className="flex items-center gap-2">
+                            <Link href={'/user/' + result.id} onClick={() => setOpen(false)} key={index} className="flex items-center gap-2">
                                 <Image width={80} height={80} src={result.avatar} alt="profile" className="w-8 h-8 rounded-full" />
                                 <p className="text-sm font-normal text-primary">{result.name}</p>
-                            </div>
+                            </Link>
                         )
                     })
                 }
@@ -26,10 +27,10 @@ const SearchModal = (props: any) => {
                 {
                     searchResultPublication.map((result: any, index: number) => {
                         return (
-                            <div key={index} className="flex items-center gap-4">
+                            <Link onClick={() => setOpen(false)} href={'/stories/' + result.id} key={index} className="flex items-center cursor-pointer gap-4">
                                 <Image width={80} height={80} src={result.avatar} alt="profile" className="w-8 h-8 rounded-full" />
-                                <p className="text-sm font-normal text-black cursor-pointer">{result.title}</p>
-                            </div>
+                                <p className="text-sm font-normal text-black">{result.title}</p>
+                            </Link>
                         )
                     })
                 }

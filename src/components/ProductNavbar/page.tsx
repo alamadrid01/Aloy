@@ -40,16 +40,16 @@ const ProductNavbar = ({ text = "stories" }: { text: string }) => {
     const handleShortcut = (event: any) => {
       if (event.ctrlKey && event.key === "/") {
         searchBarRef.current?.focus();
-      } else if (event.ctrlKey && event.key === "n") {
-        window.location.href = "/new-story";
-      } else if (event.ctrlKey && event.key === "b") {
-        window.location.href = "/bookmarks";
-      } else if (event.ctrlKey && event.key === "h") {
-        window.location.href = "/history";
-      } else if (event.ctrlKey && event.key === "l") {
-        window.location.href = "/login";
-      } else if (event.ctrlKey && event.key === "p") {
-        window.location.href = "/profile";
+      // } else if (event.ctrlKey && event.key === "n") {
+      //   window.location.href = "/new-story";
+      // } else if (event.ctrlKey && event.key === "b") {
+      //   window.location.href = "/bookmarks";
+      // } else if (event.ctrlKey && event.key === "h") {
+      //   window.location.href = "/history";
+      // } else if (event.ctrlKey && event.key === "l") {
+      //   window.location.href = "/login";
+      // } else if (event.ctrlKey && event.key === "p") {
+      //   window.location.href = "/profile";
       } else if (search && event.key === "Enter") {
         window.location.href = `/search?q=${search.toLowerCase()}`;
       }
@@ -66,7 +66,7 @@ const ProductNavbar = ({ text = "stories" }: { text: string }) => {
   const { push } = useRouter();
 
   let miniSearch = new MiniSearch({
-    fields: ["title", "description", "author.firstName", "author.lastName"],
+    fields: ["title", "description", "author.firstName", "author.lastName", ],
     extractField: (document, fieldName) => {
       if (fieldName === "author.firstName") {
         return document.author.firstName;
@@ -93,16 +93,17 @@ const ProductNavbar = ({ text = "stories" }: { text: string }) => {
     miniSearch.addAll(indexedData);
     const results = miniSearch.search(search, { prefix: true, fuzzy: 0.2 });
 
-    const peopleResults: { name: string; avatar: string }[] = [];
-    const publicationResults: { title: string; avatar: string }[] = [];
+    const peopleResults: { name: string; avatar: string, id: string }[] = [];
+    const publicationResults: { title: string; avatar: string, id: string }[] = [];
 
     results.forEach((result: any) => {
       if (result.author) {
         peopleResults.push({
           name: result.author.firstName + " " + result.author.lastName,
           avatar: result.author.avatar,
+          id: result.author._id,
         });
-        publicationResults.push({ title: result.title, avatar: result.image });
+        publicationResults.push({ title: result.title, avatar: result.image, id: result._id});
       }
     });
 
