@@ -2,7 +2,8 @@
 const nextConfig = {
     images: {
         domains: ['pbs.twimg.com', 'res.cloudinary.com', 'picsum.photos', 'picsum.photos', 'lh3.googleusercontent.com']
-    }
+    },
+    reactStrictMode: false,
 };
 
 export default nextConfig;

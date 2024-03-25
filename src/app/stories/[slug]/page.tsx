@@ -80,7 +80,9 @@ const Slug = ({params}: {params: {slug: String}}) => {
             console.log(response.status)
 
             const data = await response.json()
-            setBookmarks(data.bookmarks)
+            if(response.status === 200){
+                setBookmarks(data.bookmarks)
+            }
         }else{
             const response = await fetch(`/api/blog/bookmark/?blogId=${params.slug}&id=${datas.author._id}`, {
                 method: 'PUT',
@@ -90,7 +92,9 @@ const Slug = ({params}: {params: {slug: String}}) => {
             console.log(response.status)
 
             const data = await response.json()
-            setBookmarks(data.bookmarks)
+            if(response.status === 200){
+                setBookmarks(data.bookmarks)
+            }
         }
     }
 
@@ -112,7 +116,6 @@ const Slug = ({params}: {params: {slug: String}}) => {
            })()
         }else{
             const isBookmarked = bookmarks.filter((book:any) => params.slug === book._id)
-            console.log('is bookmarked', isBookmarked)
             if(isBookmarked.length > 0){
                 setIsBookmarked(true)
             }else{
