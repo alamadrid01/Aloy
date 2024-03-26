@@ -67,48 +67,23 @@ export const BlogCard =  ({
     }
   }
 
-//   React.useEffect(() => {
-//     if(!email) return;
-//     if(!lastName){
-//         (async () =>{
-//         const res = await fetch('/api/register/?email=' + email)
-//         console.log(res.status)
-
-//         const data = await res.json()
-//         setBookmarks(data.bookmarks)
-//         const isBookmarked = data.bookmarks.filter((book:any) => params.slug === book._id)
-//         if(isBookmarked.length > 0){
-//             setIsBookmarked(true)
-//         }else{
-//             setIsBookmarked(false)
-//         }
-//        })()
-//     }else{
-//         const isBookmarked = bookmarks.filter((book:any) => params.slug === book._id)
-//         if(isBookmarked.length > 0){
-//             setIsBookmarked(true)
-//         }else{
-//             setIsBookmarked(false)
-//         }
-//     }
-// }, [email]);
-
-
     return(
     <div
-      className="flex flex-col border-b pb-8 mt-3 gap-1"
+      className="flex flex-col w-full border-b pb-8 mt-3 gap-1"
     >
         <ToastContainer />
       <div className="flex">
         <div className="flex items-center gap-3 ">
-          <Image
-            src={img}
-            width={30}
-            height={30}
-            alt="blog-image"
-            className="object-cover rounded-full"
-          />
-          <p className="text-primary font-medium text-sm">{author}</p>
+         {
+              img &&  <Image
+              src={img}
+              width={30}
+              height={30}
+              alt="blog-image"
+              className="object-cover rounded-full"
+            />
+         }
+          {author && <p className="text-primary font-medium text-sm">{author}</p>}
           <p className="text-primary text-xs">{date}</p>
         </div>
       </div>

@@ -119,12 +119,14 @@ const userProfileSchema = new mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "UserProfile",
+        unique: true,
       },
     ],
     followers: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "UserProfile",
+        unique: true,
       },
     ],
     blogs: [
